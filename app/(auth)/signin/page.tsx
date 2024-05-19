@@ -1,10 +1,14 @@
 import SocialLoginButton from '@/components/auth/SocialLoginButton';
 import SignInFormContainer from '@/components/auth/signin/SignInFormContainer';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function SignInPage() {
   return (
     <div className="flex flex-col gap-8">
+      <Link href={'/'} className="text-sm text-gray-500">
+        {'<'} HOME
+      </Link>
       <Image
         src={'/images/logo.png'}
         alt="logo"
