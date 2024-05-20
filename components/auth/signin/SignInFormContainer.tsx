@@ -71,6 +71,11 @@ const SignInFormContainer = () => {
 
   const submitForm = (data: { email: string; password: string }) => {
     console.log(data);
+    /* 
+      TODO: 로그인 API 호출, 에러처리
+      성공시 메인페이지 or 유저정보입력 페이지 이동 로직 추가 필요
+      jwt 토큰 저장
+    */
     if (rememberMeRef.current && rememberMeRef.current.checked) {
       localStorage.setItem('email', data.email);
     } else {

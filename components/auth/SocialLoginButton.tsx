@@ -6,6 +6,7 @@ interface SocialLoginButtonType {
 }
 
 const SocialLoginButton = ({ buttonType }: SocialLoginButtonType) => {
+  // TODO: 소셜 로그인 버튼 클릭 시 로직 추가 및 유아이 수정필요
   const router = useRouter();
   const signInSocial = () => {
     router.push(`/auth/${buttonType}`);
