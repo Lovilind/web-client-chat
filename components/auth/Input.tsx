@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-interface InputFormProps {
+export interface InputProps {
   type: 'text' | 'password' | 'number' | 'email';
   id: string;
   addInputClassName?: string;
@@ -9,6 +9,7 @@ interface InputFormProps {
   register?: UseFormRegisterReturn;
   maxLength?: number;
   errorMsg?: string;
+  isReadOnly?: boolean;
   children?: React.ReactNode;
 }
 
@@ -20,8 +21,9 @@ const Input = ({
   register,
   maxLength,
   errorMsg,
+  isReadOnly,
   children,
-}: InputFormProps) => {
+}: InputProps) => {
   return (
     <>
       <div className="relative mt-2">
@@ -31,6 +33,7 @@ const Input = ({
           type={type}
           maxLength={maxLength}
           placeholder={placeholder}
+          readOnly={isReadOnly}
           {...register}
         />
         {children}

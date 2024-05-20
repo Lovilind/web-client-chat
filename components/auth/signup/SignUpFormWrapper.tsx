@@ -6,6 +6,7 @@ import Step from '@/components/common/Step';
 import SignUpStep1 from './SignUpStep1';
 import SignUpStep2 from './SignUpStep2';
 import FormContainer from '@/components/common/FormContainer';
+import SignUpStep3 from './SignIpStep3';
 
 export interface SignUpFormDataType {
   email: string;
@@ -66,8 +67,14 @@ const SignUpFormWrapper = () => {
             handleAccessStepList={handleAccessStepList}
           />
         )}
-        {currentStep === 'step2' && <SignUpStep2 />}
         {currentStep === 'step2' && (
+          <SignUpStep2
+            handleCurrentStep={handleCurrentStep}
+            handleAccessStepList={handleAccessStepList}
+          />
+        )}
+        {currentStep === 'step3' && <SignUpStep3 />}
+        {currentStep === 'step3' && (
           <button
             type="submit"
             className="mt-6 block w-full rounded-lg border bg-[#38CCDD] px-4 py-3 font-semibold text-white hover:border-[#38CCDD] hover:bg-white hover:text-gray-500 focus:bg-white focus:text-gray-500"
