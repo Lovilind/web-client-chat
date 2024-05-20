@@ -31,9 +31,9 @@ const Step = ({
         <li
           key={step}
           onClick={() => onClickStep(step)}
-          className={`min-h-1 flex-1 cursor-pointer ${
+          className={`min-h-1 flex-1 cursor-pointer ${accessStepList?.includes(step) ? 'cursor-pointer' : 'cursor-not-allowed bg-gray-200'} ${
             currentStep === step ? 'bg-[#38CCDD]' : 'bg-gray-500'
-          }`}
+          } `}
         ></li>
       ))}
     </ul>
