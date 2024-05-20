@@ -1,12 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
 'use client';
-import React, { useCallback, useMemo } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useCallback, useMemo, useState } from 'react';
 import { signUpRegisterSchema } from '@/constants/Schema';
 import Step from '@/components/common/Step';
 import SignUpStep1 from './SignUpStep1';
 import SignUpStep2 from './SignUpStep2';
+import FormContainer from '@/components/common/FormContainer';
 
 export interface SignUpFormDataType {
   email: string;
@@ -15,30 +14,13 @@ export interface SignUpFormDataType {
   universityName: string;
 }
 
-const SignUpFormContainer = () => {
-  const {
-    handleSubmit,
-    // getValues,
-    register,
-    trigger, //다른버튼에서 검증할수있는듯
-    clearErrors,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(signUpRegisterSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-      passwordCheck: '',
-      universityName: '',
-    },
-  });
+const SignUpFormWrapper = () => {
   const stepList = useMemo(() => ['step1', 'step2'], []);
-  const [currentStep, setCurrentStep] = React.useState<string>(stepList[0]);
+
+  const [currentStep, setCurrentStep] = useState<string>(stepList[0]);
 
   const handleCurrentStep = useCallback((stepName: string) => {
     setCurrentStep(stepName);
-    clearErrors();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const submitForm = (data: SignUpFormDataType) => {
@@ -55,19 +37,20 @@ const SignUpFormContainer = () => {
         />
       </div>
 
-      <form onSubmit={handleSubmit(submitForm)}>
+      <FormContainer
+        onSubmit={submitForm}
+        formSchema={signUpRegisterSchema}
+        defaultValues={{
+          email: '',
+          password: '',
+          passwordCheck: '',
+          universityName: '',
+        }}
+      >
         {currentStep === 'step1' && (
-          <SignUpStep1
-            register={register}
-            errors={errors}
-            handleCurrentStep={handleCurrentStep}
-            // getValues={getValues}
-            trigger={trigger}
-          />
+          <SignUpStep1 handleCurrentStep={handleCurrentStep} />
         )}
-        {currentStep === 'step2' && (
-          <SignUpStep2 register={register} errors={errors} />
-        )}
+        {currentStep === 'step2' && <SignUpStep2 />}
         {currentStep === 'step2' && (
           <button
             type="submit"
@@ -76,9 +59,10 @@ const SignUpFormContainer = () => {
             회원가입
           </button>
         )}
-      </form>
+        <div></div>
+      </FormContainer>
     </div>
   );
 };
 
-export default SignUpFormContainer;
+export default SignUpFormWrapper;

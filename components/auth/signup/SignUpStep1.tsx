@@ -1,31 +1,21 @@
 import React from 'react';
 import Input from '../Input';
-import {
-  FieldErrors,
-  // UseFormGetValues,
-  UseFormRegister,
-  UseFormTrigger,
-} from 'react-hook-form';
-import { SignUpFormDataType } from './SignUpFormContainer';
+import { useFormContext } from 'react-hook-form';
+import { SignUpFormDataType } from './SignUpFormWrapper';
 
 interface SignUpStep1Props {
-  register: UseFormRegister<SignUpFormDataType>;
-  errors: FieldErrors<SignUpFormDataType>;
   handleCurrentStep: (stepName: string) => void;
-  // getValues: UseFormGetValues<SignUpFormDataType>;
-  trigger: UseFormTrigger<SignUpFormDataType>;
 }
 
-const SignUpStep1 = ({
-  register,
-  errors,
-  handleCurrentStep,
-  // getValues,
-  trigger,
-}: SignUpStep1Props) => {
+const SignUpStep1 = ({ handleCurrentStep }: SignUpStep1Props) => {
+  const {
+    register,
+    trigger,
+    formState: { errors },
+  } = useFormContext<SignUpFormDataType>();
   const onClickNextStep = async () => {
-    const emailVal = await trigger('email' && 'password' && 'passwordCheck');
-    if (!emailVal) {
+    const validCheck = await trigger(['email', 'password', 'passwordCheck']);
+    if (!validCheck) {
       return;
     }
     handleCurrentStep('step2');
@@ -40,8 +30,7 @@ const SignUpStep1 = ({
           register={register('email', {
             required: true,
           })}
-          // errorMsg={errors.email?.message}
-          errorMsg={errors.email?.message as string}
+          errorMsg={errors.email?.message}
         />
       </div>
       <div>
@@ -52,7 +41,7 @@ const SignUpStep1 = ({
           register={register('password', {
             required: true,
           })}
-          errorMsg={errors.password?.message as string}
+          errorMsg={errors.password?.message}
         />
       </div>
       <div>
@@ -63,7 +52,7 @@ const SignUpStep1 = ({
           register={register('passwordCheck', {
             required: true,
           })}
-          errorMsg={errors.passwordCheck?.message as string}
+          errorMsg={errors.passwordCheck?.message}
         />
       </div>
       <button

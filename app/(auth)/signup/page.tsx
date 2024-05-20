@@ -1,4 +1,4 @@
-import SignUpFormContainer from '@/components/auth/signup/SignUpFormContainer';
+import SignUpFormWrapper from '@/components/auth/signup/SignUpFormWrapper';
 import Link from 'next/link';
 
 const SignUpPage = () => {
@@ -11,7 +11,7 @@ const SignUpPage = () => {
       </div>
 
       <div>
-        <SignUpFormContainer />
+        <SignUpFormWrapper />
       </div>
     </div>
   );

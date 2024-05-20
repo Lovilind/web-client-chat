@@ -1,14 +1,13 @@
 import React from 'react';
 import Input from '../Input';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
-import { SignUpFormDataType } from './SignUpFormContainer';
+import { useFormContext } from 'react-hook-form';
+import { SignUpFormDataType } from './SignUpFormWrapper';
 
-interface SignUpStep2Props {
-  register: UseFormRegister<SignUpFormDataType>;
-  errors: FieldErrors<SignUpFormDataType>;
-}
-
-const SignUpStep2 = ({ register, errors }: SignUpStep2Props) => {
+const SignUpStep2 = () => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<SignUpFormDataType>();
   return (
     <>
       <div>
@@ -19,7 +18,7 @@ const SignUpStep2 = ({ register, errors }: SignUpStep2Props) => {
           register={register('universityName', {
             required: true,
           })}
-          errorMsg={errors.universityName?.message as string}
+          errorMsg={errors.universityName?.message}
         />
       </div>
     </>
