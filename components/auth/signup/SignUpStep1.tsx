@@ -9,10 +9,25 @@ interface SignUpStep1Props {
   handleAccessStepList: (stepName: string, value: boolean) => void;
 }
 
+// async function checkEmail() {
+//   const response = await fetch('/todos', {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//   });
+
+//   const data = await response.json();
+//   console.log(data);
+// }
+
 const SignUpStep1 = ({
   handleCurrentStep,
   handleAccessStepList,
 }: SignUpStep1Props) => {
+  // const test = await checkEmail();
+  // console.log(test);
+
   const {
     register,
     trigger,
@@ -26,6 +41,25 @@ const SignUpStep1 = ({
       setIsPending(false);
     }, 2000);
     // TODO: api 통해서 성공하면 성공했다는 노티, 실패하면 setError통해서하면될듯
+    // const response2 = await fetch('/todos', {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({ email: 'user1@example.com' }),
+    // });
+    const response = await fetch('/api/check-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: 'user1@example.com' }),
+    });
+
+    // const data2 = await response2.json();
+    const data = await response.json();
+    console.log(data);
+    // console.log(data2);
   };
 
   const onClickNextStep = async () => {
