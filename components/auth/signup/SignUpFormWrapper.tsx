@@ -15,13 +15,24 @@ export interface SignUpFormDataType {
 }
 
 const SignUpFormWrapper = () => {
-  const stepList = useMemo(() => ['step1', 'step2'], []);
+  const stepList = useMemo(() => ['step1', 'step2', 'step3'], []);
 
   const [currentStep, setCurrentStep] = useState<string>(stepList[0]);
+  const [accessStepList, setAccessStepList] = useState<string[]>([stepList[0]]);
 
   const handleCurrentStep = useCallback((stepName: string) => {
     setCurrentStep(stepName);
   }, []);
+
+  const handleAccessStepList = (stepName: string, value: boolean) => {
+    if (!accessStepList.includes(stepName) && value) {
+      setAccessStepList([...accessStepList, stepName]);
+      return;
+    }
+    if (!value) {
+      setAccessStepList(accessStepList.filter((step) => step !== stepName));
+    }
+  };
 
   const submitForm = (data: SignUpFormDataType) => {
     console.log(data);
@@ -34,6 +45,8 @@ const SignUpFormWrapper = () => {
           currentStep={currentStep}
           stepList={stepList}
           handleCurrentStep={handleCurrentStep}
+          isAllAccessStep={false}
+          accessStepList={accessStepList}
         />
       </div>
 
@@ -48,7 +61,10 @@ const SignUpFormWrapper = () => {
         }}
       >
         {currentStep === 'step1' && (
-          <SignUpStep1 handleCurrentStep={handleCurrentStep} />
+          <SignUpStep1
+            handleCurrentStep={handleCurrentStep}
+            handleAccessStepList={handleAccessStepList}
+          />
         )}
         {currentStep === 'step2' && <SignUpStep2 />}
         {currentStep === 'step2' && (

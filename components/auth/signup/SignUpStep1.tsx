@@ -5,9 +5,13 @@ import { SignUpFormDataType } from './SignUpFormWrapper';
 
 interface SignUpStep1Props {
   handleCurrentStep: (stepName: string) => void;
+  handleAccessStepList: (stepName: string, value: boolean) => void;
 }
 
-const SignUpStep1 = ({ handleCurrentStep }: SignUpStep1Props) => {
+const SignUpStep1 = ({
+  handleCurrentStep,
+  handleAccessStepList,
+}: SignUpStep1Props) => {
   const {
     register,
     trigger,
@@ -15,6 +19,7 @@ const SignUpStep1 = ({ handleCurrentStep }: SignUpStep1Props) => {
   } = useFormContext<SignUpFormDataType>();
   const onClickNextStep = async () => {
     const validCheck = await trigger(['email', 'password', 'passwordCheck']);
+    handleAccessStepList('step2', validCheck);
     if (!validCheck) {
       return;
     }
