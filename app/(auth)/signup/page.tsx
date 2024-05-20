@@ -6,7 +6,7 @@ const SignUpPage = () => {
     <div>
       <div className="mb-8">
         <Link href={'/signin'} className="text-sm text-gray-500">
-          {'<'} BACK
+          {'<'} LOGIN
         </Link>
       </div>
 
