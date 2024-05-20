@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { CounterStoreProvider } from './_store/providers/sample-store-provider';
 
 export default function Home() {
   return (
