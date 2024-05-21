@@ -4,6 +4,7 @@ import './globals.css';
 import Header from './_component/header';
 import Footer from './_component/footer';
 import { CounterStoreProvider } from './_store/providers/sample-store-provider';
+import { MockProvider } from './MswProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,9 +22,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <CounterStoreProvider>
-          <Header />
-          {children}
-          <Footer />
+          <MockProvider>
+            <Header />
+            {children}
+            <Footer />
+          </MockProvider>
         </CounterStoreProvider>
       </body>
     </html>

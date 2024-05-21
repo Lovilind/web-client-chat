@@ -22,14 +22,178 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+/* TODO: tail wind로 정의해서 쓸것, 우선 사요 */
+
+.page-container {
+  width: 100%;
+  height: 100vh;
+  background-color: #333;
+  color: #000;
+}
+
+.layout-contents {
+  height: 100%;
+  background-color: #fff;
+  display: flex;
+  margin: 0 auto;
+}
+
+.fx-rw {
+  display: flex;
+}
+.fx-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.fx-algn-cntr {
+  align-items: center;
+}
+
+.fx-cntn-cntr {
+  justify-content: center;
+}
+
+.wrap-contents {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.def-padng-sd {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.def-padng-tb {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.wrap-btn {
+  width: 36px;
+  height: 36px;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.row-1 {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.row-2 {
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.wrap-contents-head {
+  justify-content: space-between;
+  margin-bottom: 12px;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  padding-top: 12px;
+}
+
+/* NOTE: 컴포넌트 */
+
+#lvl-header {
+  justify-content: space-between;
+  border-bottom: 1px solid #f0ebe3;
+  overflow: hidden;
+}
+
+#lvl-gnb {
+  justify-content: space-between;
+  overflow: hidden;
+  border-top: 1px solid #f0ebe3;
+}
+
+.wrap-chatting-room-list .room-title {
+  font-size: 16px;
+  font-weight: 600;
+  max-width: 80%;
+}
+
+.wrap-chatting-room-list #lvl-chatting-room-item {
+  padding: 8px;
+  border-radius: 8px;
+  background-color: #f8f4e1;
+}
+
+.wrap-chatting-room-list .room-enter-count,
+.wrap-chatting-room-list .room-desc {
+  font-size: 14px;
+  color: #888;
+  max-width: 80%;
+}
+.wrap-chatting-room-list .room-enter-count,
+.wrap-chatting-room-list .room-status-badge {
+  display: inline-flex;
+  margin-left: auto;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.wrap-chatting-room-list .room-enter-count {
+  margin-bottom: auto;
+  font-size: 12px;
+}
+
+.wrap-chatting-room-list .room-status-badge {
+  border-radius: 30px;
+  padding: 0 8px;
+  color: #fff;
+  background-color: #b47269;
+  font-size: 12px;
+}
+
+.wrap-chatting-room-list .box-info.mid {
+  margin: 4px 0;
+}
+
+.wrap-chatting-room-list #lvl-chatting-room-item {
+  margin: 12px 0;
+}
+.wrap-chatting-room-list #lvl-chatting-room-item:first-child {
+  margin-top: 0;
+}
+
+#lvl-interest-badge {
+  display: inline-block;
+  font-size: 12px;
+  height: 20px;
+  color: #7794ee;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+#lvl-interest-badge::before {
+  content: '#';
+}
+
+.user-thumbnail {
+  background-image: url('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  background-size: cover;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  flex-shrink: 0;
+}
+
+.wrap-entry-thumbnails {
+  margin-left: auto;
 }
 
 main {

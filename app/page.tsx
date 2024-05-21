@@ -2,15 +2,15 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-start justify-start">
-      <Link href={'/login'}>
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <Link href={'/signin'}>
         <button>로그인하기</button>
       </Link>
-      <Link href={'/chat'}>
-        <button>채팅하기</button>
+      <Link href={'/signup'}>
+        <button>회원가입</button>
       </Link>
-      <Link href={'/register'}>
-        <button>회원가입하기</button>
+      <Link href={'/login'}>
+        <button>zuatand store test</button>
       </Link>
     </main>
   );
