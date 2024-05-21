@@ -1,4 +1,3 @@
-// src/providers/counter-store-provider.tsx
 'use client';
 
 import { type ReactNode, createContext, useRef, useContext } from 'react';
@@ -35,12 +34,12 @@ export const CounterStoreProvider = ({
 
 export const useCounterStore = <T,>(
   selector: (store: CounterStore) => T,
-): T => {
+): T | null => {
   const counterStoreContext = useContext(CounterStoreContext);
 
   if (!counterStoreContext) {
     throw new Error(`useCounterStore must be use within CounterStoreProvider`);
   }
 
-  return useStore(counterStoreContext, selector);
+  return useStore(counterStoreContext!, selector);
 };
