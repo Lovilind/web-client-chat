@@ -1,18 +1,25 @@
 'use client';
 
 import React, { useRef } from 'react';
-import { newStompClient, stomps } from '@/utils/StompCustomHooks';
+import { stomps } from '@/utils/StompCustomHooks';
+import { StompData } from '@/models/StompData';
 
-export default function InputBox() {
+type MessageInputProps = Omit<StompData, 'event'>;
+
+export default function MessageInput({
+  stompClient,
+  roomId,
+}: MessageInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+
   const handleSendChat = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const message = inputRef.current?.value;
     if (message) {
       console.log('전송할 메세지 : ', message);
-      stomps.useSendChat(
-        { stompClient: newStompClient, event: 'chat', roomId: 1 },
-        { message, writer: 1, messageType: 'CHAT' },
+      stomps.sendChat(
+        { stompClient, event: 'chat', roomId },
+        { message, messageType: 'CHAT' },
       );
       inputRef.current.value = '';
     }
