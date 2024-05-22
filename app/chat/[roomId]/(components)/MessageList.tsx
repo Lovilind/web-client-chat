@@ -1,19 +1,33 @@
 'use client';
 
-import { stomps, newStompClient } from '@/utils/StompCustomHooks';
-import React from 'react';
-import MessageBox from './MessageBox';
+import { stomps } from '@/utils/StompCustomHooks';
+import React, { useEffect, useState } from 'react';
+import MessageItem from './MessageItem';
+import { ReceiveData, StompData } from '@/models/StompData';
 
-export default function MessageList({ roomId }: { roomId: string }) {
+type MessageListProps = Omit<StompData, 'event'>;
+
+export default function MessageList({ stompClient, roomId }: MessageListProps) {
+  const [messageList, setMessageList] = useState<ReceiveData[]>([]);
+
   const messageData = stomps.useReceiveChat({
-    stompClient: newStompClient,
+    stompClient,
     event: 'chat',
-    roomId: Number(roomId),
+    roomId,
   });
-  if (messageData) {
+
+  useEffect(() => {
+    if (messageData) {
+      setMessageList((prev) => [...prev, messageData]);
+    }
+  }, [messageData]);
+
+  if (messageList.length) {
     return (
       <ul>
-        <MessageBox messageData={messageData} />
+        {messageList.map((message: ReceiveData, idx: number) => (
+          <MessageItem key={idx} messageData={message} />
+        ))}
       </ul>
     );
   } else {
