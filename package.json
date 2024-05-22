@@ -16,6 +16,8 @@
     "react-hook-form": "^7.51.4",
     "tailwind-merge": "^2.3.0",
     "zod": "^3.23.8",
+    "@stomp/stompjs": "^7.0.0",
+    "ws": "^8.17.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
