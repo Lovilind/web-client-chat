@@ -3,7 +3,7 @@ import { Client } from '@stomp/stompjs';
 export type StompData = {
   stompClient: Client;
   event: string;
-  roomId: number | string;
+  roomId: string;
 };
 
 export type CommonChatData = {
@@ -12,7 +12,7 @@ export type CommonChatData = {
 };
 
 export type SendData = CommonChatData & {
-  writer: string | number;
+  // writer: string; // authorization에 유저토큰으로 넘길 예정
 };
 
 export type ReceiveData = CommonChatData & {
