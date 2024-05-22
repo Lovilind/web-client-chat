@@ -2,13 +2,16 @@
 
 import { Client, IMessage } from '@stomp/stompjs';
 import { useEffect, useState } from 'react';
-import { ReceiveData, SendData, StompData } from '@/models/StompData';
-
-export const newStompClient = new Client({
-  brokerURL: 'wss://api.lovlind.me/api/ws',
-});
+import { ReceiveData, CommonChatData, StompData } from '@/models/StompData';
 
 export const stomps = {
+  // stompClient 생성
+  newStompClient: (userToken: string) => {
+    return new Client({
+      brokerURL: 'wss://api.lovlind.me/api/ws',
+      connectHeaders: { Authorization: userToken },
+    });
+  },
   // 메세지 수신
   useReceiveChat: ({ stompClient, event = 'chat', roomId }: StompData) => {
     const [messages, setMessages] = useState<ReceiveData>();
@@ -26,23 +29,32 @@ export const stomps = {
       };
 
       stompClient.activate();
+
+      return () => {
+        stompClient.deactivate();
+      };
     }, [stompClient, event, roomId]);
 
     return messages;
   },
-  useSendChat: (
+  // 메세지 송신
+  sendChat: (
     { stompClient, event = 'chat', roomId }: StompData,
-    { message, writer = '작성자', messageType = 'CHAT' }: SendData,
+    { message, messageType = 'CHAT' }: CommonChatData,
   ) => {
     if (stompClient && stompClient.connected) {
       stompClient.publish({
         destination: `/pub/${event}/${roomId}`,
         body: JSON.stringify({
           messageType,
-          writer,
           message,
         }),
       });
     }
+  },
+  // unsubscribe 시 socket 연결 모두 끊어져야 함. 재확인 필요
+  // 채팅방 나가기 (채팅방 유저에서 아예 삭제)
+  leaveChatRoom: ({ stompClient, roomId }: Omit<StompData, 'event'>) => {
+    stompClient.unsubscribe(roomId);
   },
 };
