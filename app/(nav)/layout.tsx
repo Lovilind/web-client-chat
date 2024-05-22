@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '@/app/globals.css';
-import { CounterStoreProvider } from '@/app/store/providers/sample-store-provider';
+import { CounterStoreProvider } from '@/store/providers/sample-store-provider';
 import { MockProvider } from '@/app/MswProvider';
 import Image from 'next/image';
 import Link from 'next/link';

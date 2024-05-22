@@ -1,5 +1,5 @@
 'use client';
-import { useCounterStore } from '@/app/store/providers/rootStoreProvider';
+import { useCounterStore } from '@/store/providers/rootStoreProvider';
 
 export default function ZustandPage() {
   const { count, incrementCount, decrementCount } =
