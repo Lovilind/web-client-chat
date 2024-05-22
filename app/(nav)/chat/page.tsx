@@ -4,6 +4,7 @@ import { ChattingRoomItem } from '@/components/ChattingRoomItem';
 
 import { GlobalNavigation } from '@/components/GlobalNavigation';
 import { TopHeader } from '@/components/TopHeader';
+import Link from 'next/link';
 
 export default function Chat() {
   //TODO: GA나 관련 이벤트는 구독해서 처리할 수 있도록 store로 옵저빙 형태로 처리하기
@@ -33,13 +34,24 @@ export default function Chat() {
           </section>
 
           <ul className="wrap-chatting-room-list">
-            <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
-            <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
-            <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
-            <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
-            <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
-            <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
-            <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
+            <Link href={'/chat/1'}>
+              <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
+            </Link>
+            <Link href={'/chat/2'}>
+              <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
+            </Link>
+            <Link href={'/chat/3'}>
+              <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
+            </Link>
+            <Link href={'/chat/4'}>
+              <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
+            </Link>
+            <Link href={'/chat/5'}>
+              <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
+            </Link>
+            <Link href={'/chat/6'}>
+              <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
+            </Link>
           </ul>
         </div>
         <GlobalNavigation onClickGlobalNavigation={onClickFromChat} />
