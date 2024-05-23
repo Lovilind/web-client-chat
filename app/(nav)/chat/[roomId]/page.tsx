@@ -1,14 +1,10 @@
 import React from 'react';
-import InputBox from './(components)/InputBox';
-import MessageList from './(components)/MessageList';
+import ChatRoom from './(components)/ChatRoom';
 
 export default function RoomId({ params }: { params: { roomId: string } }) {
   return (
     <section className="h-full w-full max-w-screen-md	bg-blue-200 p-3">
-      <div className="relative flex h-full w-full justify-center">
-        <MessageList roomId={params.roomId} />
-        <InputBox />
-      </div>
+      <ChatRoom roomId={params.roomId} />
     </section>
   );
 }
