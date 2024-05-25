@@ -1,17 +1,6 @@
-// import { http, HttpResponse } from 'msw';
+import { rest, http, HttpResponse } from 'msw';
 
-// export const handlers = [
-//   http.get('http://localhost:3000/todos', () => {
-//     return HttpResponse.json({
-//       firstName: 'John',
-//       lastName: 'Maverick',
-//     });
-//   }),
-// ];
-
-import { http, HttpResponse } from 'msw';
-
-const registeredEmails = ['user1@example.com', 'user2@example.com'];
+const registeredEmails = ['test@test.com', 'user2@example.com'];
 
 export const handlers = [
   http.get('/todos', () => {
@@ -22,18 +11,27 @@ export const handlers = [
   }),
 
   // Email check handler
-  http.post('/api/check-email', ({ request }) => {
-    const { email } = request.body;
+  http.post('/api/check-email', async ({ request }) => {
+    // console.log(request.body.getReader('email'));
+    // const data = await request.formData();
+    const { email } = await request.json();
+    console.log(email);
 
     if (registeredEmails.includes(email)) {
-      return HttpResponse.json({
-        message: 'Email already exists',
-      });
+      return HttpResponse.json(
+        {
+          message: 'Email already exists',
+        },
+        { status: 400 },
+      );
     }
 
-    return HttpResponse.json({
-      message: 'Email is available',
-    });
+    return HttpResponse.json(
+      {
+        message: 'Email is available',
+      },
+      { status: 200 },
+    );
   }),
 
   // Signup handler
@@ -54,54 +52,3 @@ export const handlers = [
     });
   }),
 ];
-
-// import { rest } from 'msw';
-
-// const registeredEmails = ['user1@example.com', 'user2@example.com'];
-
-// export const handlers = [
-//   // Email check handler
-//   rest.post('/api/check-email', (req, res, ctx) => {
-//     const { email } = req.body;
-
-//     if (registeredEmails.includes(email)) {
-//       return res(
-//         ctx.status(409),
-//         ctx.json({
-//           message: 'Email already exists',
-//         }),
-//       );
-//     }
-
-//     return res(
-//       ctx.status(200),
-//       ctx.json({
-//         message: 'Email is available',
-//       }),
-//     );
-//   }),
-
-//   // Signup handler
-//   rest.post('/api/signup', (req, res, ctx) => {
-//     const { email } = req.body;
-
-//     if (registeredEmails.includes(email)) {
-//       return res(
-//         ctx.status(409),
-//         ctx.json({
-//           message: 'Email already exists',
-//         }),
-//       );
-//     }
-
-//     // Simulate adding email to registered list
-//     registeredEmails.push(email);
-
-//     return res(
-//       ctx.status(201),
-//       ctx.json({
-//         message: 'Signup successful',
-//       }),
-//     );
-//   }),
-// ];

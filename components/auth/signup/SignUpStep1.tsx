@@ -29,6 +29,7 @@ const SignUpStep1 = ({
   // console.log(test);
 
   const {
+    getValues,
     register,
     trigger,
     formState: { errors },
@@ -53,7 +54,8 @@ const SignUpStep1 = ({
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email: 'user1@example.com' }),
+      body: JSON.stringify({ email: getValues('email') }),
+      // body: JSON.stringify({ email: 'user1@example.com' }),
     });
 
     // const data2 = await response2.json();
@@ -88,16 +90,16 @@ const SignUpStep1 = ({
           <button
             onClick={onClickSendEmail}
             type="button"
-            className="absolute right-2 top-1/2 flex w-16 -translate-y-1/2 transform justify-center rounded-lg border bg-[#38CCDD] py-2 font-semibold text-white hover:border-[#38CCDD] hover:bg-white hover:text-gray-500 focus:bg-white focus:text-gray-500"
+            className="bg-primary absolute right-2 top-1/2 flex w-16 -translate-y-1/2 transform justify-center rounded-lg border py-2 font-semibold text-white hover:opacity-75 focus:opacity-75"
           >
-            {isPending ? <Spinner color="#fff" /> : '인증'}
+            {isPending ? <Spinner color="#fff" size="25px" /> : '인증'}
           </button>
         </InputWithLabel>
       </div>
       <button
         type="button"
         onClick={onClickNextStep}
-        className="mt-6 block w-full rounded-lg border bg-[#38CCDD] px-4 py-3 font-semibold text-white hover:border-[#38CCDD] hover:bg-white hover:text-gray-500 focus:bg-white focus:text-gray-500"
+        className="bg-primary mt-6 block w-full rounded-lg border px-4 py-3 font-semibold text-white hover:opacity-75 focus:bg-opacity-75"
       >
         다음
       </button>

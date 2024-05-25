@@ -1,13 +1,29 @@
+import { cn } from '@/utils/cn';
+
 interface SpinnerProps {
+  addClassName?: string;
   color?: string;
-  size?: string;
+  size?: string | number;
 }
-const Spinner = ({ color = '#38CCDD', size = '25px' }: SpinnerProps) => {
+
+const Spinner = ({
+  addClassName = '',
+  color = '#38CCDD',
+  size = '20px',
+}: SpinnerProps) => {
   return (
-    <div
-      className={`h-[${size}] w-[${size}] animate-spin rounded-full border-2 border-solid border-[${color}] border-t-transparent`}
-    ></div>
+    <span
+      style={{
+        borderColor: color,
+        borderTopColor: 'transparent',
+        height: size,
+        width: size,
+      }}
+      className={cn(
+        'animate-spin rounded-full border-2 border-solid',
+        addClassName,
+      )}
+    ></span>
   );
 };
-
 export default Spinner;
