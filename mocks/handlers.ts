@@ -1,4 +1,4 @@
-import { rest, http, HttpResponse } from 'msw';
+import { http, HttpResponse } from 'msw';
 
 const registeredEmails = ['test@test.com', 'user2@example.com'];
 
@@ -14,6 +14,7 @@ export const handlers = [
   http.post('/api/check-email', async ({ request }) => {
     // console.log(request.body.getReader('email'));
     // const data = await request.formData();
+    await new Promise((resolve) => setTimeout(resolve, 500));
     const { email } = await request.json();
     console.log(email);
 
@@ -22,7 +23,7 @@ export const handlers = [
         {
           message: 'Email already exists',
         },
-        { status: 400 },
+        { status: 409 },
       );
     }
 
