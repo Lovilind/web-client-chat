@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { SignUpFormDataType } from './SignUpFormWrapper';
+import { SignUpFormDataType, signupStepForms } from './SignUpFormWrapper';
 import InputWithLabel from '../InputWithLabel';
 
 interface SignUpStep2Props {
@@ -18,7 +18,7 @@ const SignUpStep2 = ({
     formState: { errors },
   } = useFormContext<SignUpFormDataType>();
   const onClickNextStep = async () => {
-    const validCheck = await trigger(['email', 'password', 'passwordCheck']);
+    const validCheck = await trigger(signupStepForms.step2);
     handleAccessStepList('step3', validCheck);
     if (!validCheck) {
       return;
@@ -31,7 +31,7 @@ const SignUpStep2 = ({
       <div>
         <InputWithLabel
           labeText="비밀번호"
-          type={'text'}
+          type={'password'}
           placeholder="비밀번호를 입력해주세요."
           id="password"
           register={register('password', {
@@ -43,7 +43,7 @@ const SignUpStep2 = ({
       <div className="mt-1">
         <InputWithLabel
           labeText="비밀번호 확인"
-          type={'text'}
+          type={'password'}
           placeholder="비밀번호를 입력해주세요."
           id="passwordCheck"
           register={register('passwordCheck', {

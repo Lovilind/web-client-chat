@@ -18,10 +18,8 @@ export const signUpRegisterSchema = z
     phone: z
       .string()
       .nonempty('핸드폰 번호를 선택해주세요.')
-      .regex(
-        /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/,
-        '핸드폰 번호를 다시 확인해주세요.',
-      ),
+      .regex(/^[0-9]*$/, '핸드폰 번호는 숫자만 입력해주세요.')
+      .regex(/^01[016789]{1}?[0-9]{7,8}$/, '핸드폰 번호를 다시 확인해주세요.'),
     university: z
       .string()
       .nonempty('학교명을 입력해주세요.')
@@ -31,7 +29,7 @@ export const signUpRegisterSchema = z
     if (passwordCheck !== password) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: '비밀번호를 다시 확인해주세요.',
+        message: '비밀번호가 일치하지 않습니다.',
         path: ['passwordCheck'],
       });
     }

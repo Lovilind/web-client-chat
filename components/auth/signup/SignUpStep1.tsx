@@ -2,7 +2,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { SignUpFormDataType } from './SignUpFormWrapper';
+import { SignUpFormDataType, signupStepForms } from './SignUpFormWrapper';
 import InputWithLabel from '../InputWithLabel';
 import Spinner from '@/components/common/Spinner';
 import axiosInstance from '@/utils/axiosInstance';
@@ -67,7 +67,7 @@ const SignUpStep1 = ({
   };
 
   const onClickNextStep = async () => {
-    const validCheck = await trigger(['email']);
+    const validCheck = await trigger(signupStepForms.step1);
     handleAccessStepList('step2', validCheck);
     if (!validCheck) {
       return;
@@ -92,7 +92,7 @@ const SignUpStep1 = ({
           <button
             onClick={onClickCheckEmail}
             type="button"
-            className="bg-primary absolute right-2 top-1/2 flex w-16 -translate-y-1/2 transform justify-center rounded-lg border py-2 font-semibold text-white hover:opacity-75 focus:opacity-75"
+            className="absolute right-2 top-1/2 flex w-16 -translate-y-1/2 transform justify-center rounded-lg border bg-primary py-2 font-semibold text-white hover:opacity-75 focus:opacity-75"
           >
             {isPending ? <Spinner color="#fff" size="25px" /> : '인증'}
           </button>
@@ -101,7 +101,7 @@ const SignUpStep1 = ({
       <button
         type="button"
         onClick={onClickNextStep}
-        className="bg-primary mt-6 block w-full rounded-lg border px-4 py-3 font-semibold text-white hover:opacity-75 focus:bg-opacity-75"
+        className="mt-6 block w-full rounded-lg border bg-primary px-4 py-3 font-semibold text-white hover:opacity-75 focus:bg-opacity-75"
       >
         다음
       </button>
