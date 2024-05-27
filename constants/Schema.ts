@@ -22,7 +22,10 @@ export const signUpRegisterSchema = z
         /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/,
         '핸드폰 번호를 다시 확인해주세요.',
       ),
-    universityName: z.string().nonempty('학교명을 입력해주세요.'),
+    university: z
+      .string()
+      .nonempty('학교명을 입력해주세요.')
+      .regex(/대학교$/, '학교명은 "대학교"로 끝나야 합니다.'),
   })
   .superRefine(({ passwordCheck, password }, ctx) => {
     if (passwordCheck !== password) {

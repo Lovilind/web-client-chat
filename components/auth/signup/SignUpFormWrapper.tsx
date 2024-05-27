@@ -2,11 +2,11 @@
 'use client';
 import { useCallback, useMemo, useState } from 'react';
 import { signUpRegisterSchema } from '@/constants/Schema';
+import FormContainer from '@/components/common/FormContainer';
 import Step from '@/components/common/Step';
 import SignUpStep1 from './SignUpStep1';
 import SignUpStep2 from './SignUpStep2';
-import FormContainer from '@/components/common/FormContainer';
-import SignUpStep3 from './SignIpStep3';
+import SignUpStep3 from './SignUpStep3';
 
 export interface SignUpFormDataType {
   email: string;
@@ -16,16 +16,14 @@ export interface SignUpFormDataType {
   gender: string;
   birth: string;
   phone: string;
-  universityName: string;
+  university: string;
 }
 
 const SignUpFormWrapper = () => {
   const stepList = useMemo(() => ['step1', 'step2', 'step3'], []);
 
-  const [currentStep, setCurrentStep] = useState<string>(stepList[2]);
-  const [accessStepList, setAccessStepList] = useState<string[]>(stepList);
-  // const [currentStep, setCurrentStep] = useState<string>(stepList[0]);
-  // const [accessStepList, setAccessStepList] = useState<string[]>([stepList[0]]);
+  const [currentStep, setCurrentStep] = useState<string>(stepList[0]);
+  const [accessStepList, setAccessStepList] = useState<string[]>([stepList[0]]);
 
   const handleCurrentStep = useCallback((stepName: string) => {
     setCurrentStep(stepName);
@@ -64,7 +62,7 @@ const SignUpFormWrapper = () => {
           email: '',
           password: '',
           passwordCheck: '',
-          universityName: 'qwe',
+          university: '',
           nickname: '',
           gender: '',
           birth: '',
