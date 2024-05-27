@@ -12,14 +12,20 @@ export interface SignUpFormDataType {
   email: string;
   password: string;
   passwordCheck: string;
+  nickname: string;
+  gender: string;
+  birth: string;
+  phone: string;
   universityName: string;
 }
 
 const SignUpFormWrapper = () => {
   const stepList = useMemo(() => ['step1', 'step2', 'step3'], []);
 
-  const [currentStep, setCurrentStep] = useState<string>(stepList[0]);
-  const [accessStepList, setAccessStepList] = useState<string[]>([stepList[0]]);
+  const [currentStep, setCurrentStep] = useState<string>(stepList[2]);
+  const [accessStepList, setAccessStepList] = useState<string[]>(stepList);
+  // const [currentStep, setCurrentStep] = useState<string>(stepList[0]);
+  // const [accessStepList, setAccessStepList] = useState<string[]>([stepList[0]]);
 
   const handleCurrentStep = useCallback((stepName: string) => {
     setCurrentStep(stepName);
@@ -58,7 +64,12 @@ const SignUpFormWrapper = () => {
           email: '',
           password: '',
           passwordCheck: '',
-          universityName: '',
+          universityName: 'qwe',
+          nickname: '',
+          gender: '',
+          birth: '',
+          // birth: '2024-01-01',
+          phone: '',
         }}
       >
         {currentStep === 'step1' && (
@@ -82,7 +93,6 @@ const SignUpFormWrapper = () => {
             회원가입
           </button>
         )}
-        <div></div>
       </FormContainer>
     </div>
   );

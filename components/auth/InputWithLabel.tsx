@@ -25,7 +25,7 @@ const InputWithLabel = ({
       <Input
         type={type}
         placeholder={placeholder}
-        id="email"
+        id={id}
         register={register}
         errorMsg={errorMsg}
         addInputClassName={addInputClassName}
