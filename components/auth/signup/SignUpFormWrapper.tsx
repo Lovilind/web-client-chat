@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 'use client';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { signUpRegisterSchema } from '@/constants/Schema';
 import FormContainer from '@/components/common/FormContainer';
 import Step from '@/components/common/Step';
@@ -9,6 +9,7 @@ import SignUpStep2 from './SignUpStep2';
 import SignUpStep3 from './SignUpStep3';
 import { useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import useAuthStore from '@/store/useAuthStore';
 
 export interface SignUpFormDataType {
   email: string;
@@ -68,10 +69,13 @@ const SignUpButton = ({
 
 const SignUpFormWrapper = () => {
   const router = useRouter();
+  const { resetDuplicateCheckedEmail } = useAuthStore();
+
   const stepList = useMemo(() => Object.keys(signupStepForms), []);
 
   const [currentStep, setCurrentStep] = useState<string>(stepList[0]);
-  const [accessStepList, setAccessStepList] = useState<string[]>(stepList);
+  const [accessStepList, setAccessStepList] = useState<string[]>([stepList[0]]);
+  // const [accessStepList, setAccessStepList] = useState<string[]>(stepList);
 
   const handleCurrentStep = useCallback((stepName: string) => {
     setCurrentStep(stepName);
@@ -92,6 +96,12 @@ const SignUpFormWrapper = () => {
     alert('회원가입 완료');
     router.push('/');
   };
+  useEffect(() => {
+    return () => {
+      resetDuplicateCheckedEmail();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="flex flex-col gap-4">
