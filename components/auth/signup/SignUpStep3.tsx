@@ -29,7 +29,7 @@ const SignUpStep3 = () => {
     <>
       <div>
         <InputWithLabel
-          labeText="닉네임"
+          labelText="닉네임"
           type="text"
           placeholder="닉네임을 입력해주세요."
           id="nickname"
@@ -39,7 +39,7 @@ const SignUpStep3 = () => {
           errorMsg={errors.nickname?.message}
         />
         <InputWithLabel
-          labeText="학교명"
+          labelText="학교명"
           type="text"
           placeholder='학교명을 "OO대학교" 형식으로 입력해주세요.'
           id="university"
@@ -83,7 +83,7 @@ const SignUpStep3 = () => {
           </div>
         </div>
         <InputWithLabel
-          labeText="핸드폰"
+          labelText="핸드폰"
           type="text"
           placeholder="번호를 숫자만 입력해주세요."
           id="phone"

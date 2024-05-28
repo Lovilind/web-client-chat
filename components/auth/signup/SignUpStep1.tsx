@@ -99,7 +99,7 @@ const SignUpStep1 = ({
     <>
       <div className="flex">
         <InputWithLabel
-          labeText="이메일"
+          labelText="이메일"
           type="email"
           placeholder="이메일을 입력해주세요."
           addInputClassName="pr-[80px]"

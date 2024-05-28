@@ -30,7 +30,7 @@ const SignUpStep2 = ({
     <>
       <div>
         <InputWithLabel
-          labeText="비밀번호"
+          labelText="비밀번호"
           type={'password'}
           placeholder="비밀번호를 입력해주세요."
           id="password"
@@ -42,7 +42,7 @@ const SignUpStep2 = ({
       </div>
       <div className="mt-1">
         <InputWithLabel
-          labeText="비밀번호 확인"
+          labelText="비밀번호 확인"
           type={'password'}
           placeholder="비밀번호를 입력해주세요."
           id="passwordCheck"
