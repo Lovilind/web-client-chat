@@ -4,11 +4,20 @@ import { stomps } from '@/utils/StompCustomHooks';
 import React, { useEffect, useState } from 'react';
 import MessageItem from './MessageItem';
 import { ReceiveData, StompData } from '@/models/StompData';
+import { ChatHistoryData, ChatHistoryItemData } from '@/models/ChatHistoryData';
 
-type MessageListProps = Omit<StompData, 'event'>;
+type MessageListProps = Omit<StompData, 'event'> & {
+  chatHistory: ChatHistoryData | undefined;
+};
 
-export default function MessageList({ stompClient, roomId }: MessageListProps) {
-  const [messageList, setMessageList] = useState<ReceiveData[]>([]);
+export default function MessageList({
+  chatHistory,
+  stompClient,
+  roomId,
+}: MessageListProps) {
+  const [messageList, setMessageList] = useState<
+    ChatHistoryItemData[] | ReceiveData[]
+  >(chatHistory?.content.messageList || []);
 
   const messageData = stomps.useReceiveChat({
     stompClient,
