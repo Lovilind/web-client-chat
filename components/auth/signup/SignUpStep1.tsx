@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable import/no-extraneous-dependencies */
-import React from 'react';
+import React, { useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { SignUpFormDataType, signupStepForms } from './SignUpFormWrapper';
 import InputWithLabel from '../InputWithLabel';
@@ -9,6 +9,7 @@ import axiosInstance from '@/utils/axiosInstance';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import useAuthStore from '@/store/useAuthStore';
+import CertificationEmail from './CertificationEmail';
 
 interface SignUpStep1Props {
   handleCurrentStep: (stepName: string) => void;
@@ -26,7 +27,7 @@ const SignUpStep1 = ({
 }: SignUpStep1Props) => {
   const {
     duplicateCheckedEmail,
-    setDuplicateCheckedEmail,
+    // setDuplicateCheckedEmail,
     resetDuplicateCheckedEmail,
   } = useAuthStore();
   const {
@@ -38,6 +39,7 @@ const SignUpStep1 = ({
     clearErrors,
     formState: { errors },
   } = useFormContext<SignUpFormDataType>();
+  const sendEmailRef = useRef('');
   const { mutate, isPending } = useMutation<any, AxiosError, { email: string }>(
     {
       mutationFn: (email) => fetchCheckEmail(email),
@@ -45,12 +47,12 @@ const SignUpStep1 = ({
         // 요청 성공 시의 처리
         if (data.status === 200) {
           clearErrors('email');
-          setDuplicateCheckedEmail(getValues('email'));
+          // setDuplicateCheckedEmail(getValues('email'));
+          sendEmailRef.current = getValues('email');
         }
       },
       onError: (error) => {
         // 에러 처리
-        // console.error('에러 발생', error);
         if (error.response?.status === 409) {
           setError('email', {
             type: 'duplicated',
@@ -76,6 +78,9 @@ const SignUpStep1 = ({
       return;
     }
     mutate({ email: getValues('email') });
+  };
+  const resetCertification = () => {
+    sendEmailRef.current = '';
   };
 
   const onClickNextStep = async () => {
@@ -107,17 +112,29 @@ const SignUpStep1 = ({
           register={register('email', {
             required: true,
           })}
-          errorMsg={errors.email?.message}
+          isReadOnly={!!sendEmailRef.current}
+          // errorMsg={errors.email?.message}
         >
-          <button
-            onClick={onClickCheckEmail}
-            type="button"
-            className="absolute right-2 top-1/2 flex w-16 -translate-y-1/2 transform justify-center rounded-lg border bg-primary py-2 font-semibold text-white hover:opacity-75 focus:opacity-75"
-          >
-            {isPending ? <Spinner color="#fff" size="25px" /> : '인증'}
-          </button>
+          {sendEmailRef.current ? (
+            <button
+              onClick={resetCertification}
+              className="absolute right-2 top-1/2 flex -translate-y-1/2 transform justify-center rounded-full bg-gray-300 px-2 font-semibold text-white hover:opacity-75"
+            >
+              X
+            </button>
+          ) : (
+            <button
+              onClick={onClickCheckEmail}
+              type="button"
+              className="absolute right-2 top-1/2 flex w-20 -translate-y-1/2 transform justify-center rounded-lg border bg-primary py-2 font-semibold text-white hover:opacity-75 focus:opacity-75"
+            >
+              {isPending ? <Spinner color="#fff" size="25px" /> : '중복확인'}
+            </button>
+          )}
         </InputWithLabel>
       </div>
+      {sendEmailRef.current && <CertificationEmail />}
+      {errors.email && <p className="text-red-600">{errors.email?.message}</p>}
       {duplicateCheckedEmail === getValues('email') &&
         Object.keys(errors).length === 0 && (
           <p className="flex items-center text-primary">
