@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { SignUpFormDataType, signupStepForms } from './SignUpFormWrapper';
+import { SignUpFormDataType } from './SignUpFormWrapper';
 import InputWithLabel from '../InputWithLabel';
 
 interface SignUpStep2Props {
@@ -8,23 +8,11 @@ interface SignUpStep2Props {
   handleAccessStepList: (stepName: string, value: boolean) => void;
 }
 
-const SignUpStep2 = ({
-  handleCurrentStep,
-  handleAccessStepList,
-}: SignUpStep2Props) => {
+const SignUpStep2 = ({}: SignUpStep2Props) => {
   const {
     register,
-    trigger,
     formState: { errors },
   } = useFormContext<SignUpFormDataType>();
-  const onClickNextStep = async () => {
-    const validCheck = await trigger(signupStepForms.step2);
-    handleAccessStepList('step3', validCheck);
-    if (!validCheck) {
-      return;
-    }
-    handleCurrentStep('step3');
-  };
 
   return (
     <>
@@ -52,13 +40,6 @@ const SignUpStep2 = ({
           errorMsg={errors.passwordCheck?.message}
         />
       </div>
-      <button
-        type="button"
-        onClick={onClickNextStep}
-        className="mt-6 block w-full rounded-lg border bg-[#38CCDD] px-4 py-3 font-semibold text-white hover:border-[#38CCDD] hover:bg-white hover:text-gray-500 focus:bg-white focus:text-gray-500"
-      >
-        다음
-      </button>
     </>
   );
 };

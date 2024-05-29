@@ -11,22 +11,8 @@ export const signUpRegisterSchema = z
   .object({
     email: emailSchema,
     code: z.string(),
-    // .nonempty('인증번호를 입력해주세요.')
-    // .length(4, '인증번호는 4자리입니다.'),
     password: passwordSchema,
     passwordCheck: passwordSchema,
-    nickname: z.string().nonempty('닉네임을 입력해주세요.'),
-    gender: z.string().nonempty('성별을 선택해주세요.'),
-    birth: z.string().nonempty('날짜를 선택해주세요.'),
-    phone: z
-      .string()
-      .nonempty('핸드폰 번호를 선택해주세요.')
-      .regex(/^[0-9]*$/, '핸드폰 번호는 숫자만 입력해주세요.')
-      .regex(/^01[016789]{1}?[0-9]{7,8}$/, '핸드폰 번호를 다시 확인해주세요.'),
-    university: z
-      .string()
-      .nonempty('학교명을 입력해주세요.')
-      .regex(/대학교$/, '학교명은 "대학교"로 끝나야 합니다.'),
   })
   .superRefine(({ passwordCheck, password }, ctx) => {
     if (passwordCheck !== password) {
