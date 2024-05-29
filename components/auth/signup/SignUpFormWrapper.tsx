@@ -1,25 +1,81 @@
 /* eslint-disable import/no-extraneous-dependencies */
 'use client';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { signUpRegisterSchema } from '@/constants/Schema';
+import FormContainer from '@/components/common/FormContainer';
 import Step from '@/components/common/Step';
 import SignUpStep1 from './SignUpStep1';
 import SignUpStep2 from './SignUpStep2';
-import FormContainer from '@/components/common/FormContainer';
-import SignUpStep3 from './SignIpStep3';
+import SignUpStep3 from './SignUpStep3';
+import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+import useAuthStore from '@/store/useAuthStore';
 
 export interface SignUpFormDataType {
   email: string;
   password: string;
   passwordCheck: string;
-  universityName: string;
+  nickname: string;
+  gender: string;
+  birth: string;
+  phone: string;
+  university: string;
 }
 
+export const signupStepForms: {
+  step1: ['email'];
+  step2: ['password', 'passwordCheck'];
+  step3: ['nickname', 'university', 'gender', 'birth', 'phone'];
+} = {
+  step1: ['email'],
+  step2: ['password', 'passwordCheck'],
+  step3: ['nickname', 'university', 'gender', 'birth', 'phone'],
+};
+
+const SignUpButton = ({
+  handleCurrentStep,
+}: {
+  handleCurrentStep: (stepName: string) => void;
+}) => {
+  const {
+    formState: { errors },
+  } = useFormContext();
+
+  const checkErrorsInStep = (stepForm: string[]) => {
+    const errorKeys = new Set(Object.keys(errors));
+    return stepForm.some((item) => errorKeys.has(item));
+  };
+
+  const formValidCheck = () => {
+    if (checkErrorsInStep(signupStepForms.step3)) {
+      handleCurrentStep('step3');
+    } else if (checkErrorsInStep(signupStepForms.step2)) {
+      handleCurrentStep('step2');
+    } else if (checkErrorsInStep(signupStepForms.step1)) {
+      handleCurrentStep('step1');
+    }
+  };
+
+  return (
+    <button
+      type="submit"
+      onClick={formValidCheck}
+      className="mt-6 block w-full rounded-lg border bg-[#38CCDD] px-4 py-3 font-semibold text-white hover:border-[#38CCDD] hover:bg-white hover:text-gray-500 focus:bg-white focus:text-gray-500"
+    >
+      회원가입
+    </button>
+  );
+};
+
 const SignUpFormWrapper = () => {
-  const stepList = useMemo(() => ['step1', 'step2', 'step3'], []);
+  const router = useRouter();
+  const { resetDuplicateCheckedEmail } = useAuthStore();
+
+  const stepList = useMemo(() => Object.keys(signupStepForms), []);
 
   const [currentStep, setCurrentStep] = useState<string>(stepList[0]);
   const [accessStepList, setAccessStepList] = useState<string[]>([stepList[0]]);
+  // const [accessStepList, setAccessStepList] = useState<string[]>(stepList);
 
   const handleCurrentStep = useCallback((stepName: string) => {
     setCurrentStep(stepName);
@@ -37,7 +93,15 @@ const SignUpFormWrapper = () => {
 
   const submitForm = (data: SignUpFormDataType) => {
     console.log(data);
+    alert('회원가입 완료');
+    router.push('/');
   };
+  useEffect(() => {
+    return () => {
+      resetDuplicateCheckedEmail();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="flex flex-col gap-4">
@@ -58,7 +122,11 @@ const SignUpFormWrapper = () => {
           email: '',
           password: '',
           passwordCheck: '',
-          universityName: '',
+          university: '',
+          nickname: '',
+          gender: '',
+          birth: '',
+          phone: '',
         }}
       >
         {currentStep === 'step1' && (
@@ -75,14 +143,8 @@ const SignUpFormWrapper = () => {
         )}
         {currentStep === 'step3' && <SignUpStep3 />}
         {currentStep === 'step3' && (
-          <button
-            type="submit"
-            className="mt-6 block w-full rounded-lg border bg-[#38CCDD] px-4 py-3 font-semibold text-white hover:border-[#38CCDD] hover:bg-white hover:text-gray-500 focus:bg-white focus:text-gray-500"
-          >
-            회원가입
-          </button>
+          <SignUpButton handleCurrentStep={handleCurrentStep} />
         )}
-        <div></div>
       </FormContainer>
     </div>
   );

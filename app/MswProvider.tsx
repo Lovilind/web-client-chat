@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-export function MockProvider({
+export function MswProvider({
   children,
 }: Readonly<{
   children: React.ReactNode;

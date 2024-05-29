@@ -1,4 +1,5 @@
 import SignUpFormWrapper from '@/components/auth/signup/SignUpFormWrapper';
+import Image from 'next/image';
 import Link from 'next/link';
 
 const SignUpPage = () => {
@@ -9,7 +10,9 @@ const SignUpPage = () => {
           {'<'} LOGIN
         </Link>
       </div>
-
+      <div className="mb-10 flex justify-center">
+        <Image src="/images/logo.png" alt="logo" width={200} height={150} />
+      </div>
       <div>
         <SignUpFormWrapper />
       </div>

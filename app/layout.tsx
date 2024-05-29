@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '@/app/globals.css';
 import { CounterStoreProvider } from '@/store/providers/sample-store-provider';
-import { MockProvider } from '@/app/MswProvider';
+import { MswProvider } from '@/app/MswProvider';
+import ReactQueryProvider from './ReactQueryProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,7 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <CounterStoreProvider>
-          <MockProvider>{children}</MockProvider>
+          <MswProvider>
+            <ReactQueryProvider>{children}</ReactQueryProvider>
+          </MswProvider>
         </CounterStoreProvider>
       </body>
     </html>

@@ -1,69 +1,93 @@
-import React, { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable import/no-extraneous-dependencies */
+import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { SignUpFormDataType } from './SignUpFormWrapper';
+import { SignUpFormDataType, signupStepForms } from './SignUpFormWrapper';
 import InputWithLabel from '../InputWithLabel';
 import Spinner from '@/components/common/Spinner';
+import axiosInstance from '@/utils/axiosInstance';
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import useAuthStore from '@/store/useAuthStore';
 
 interface SignUpStep1Props {
   handleCurrentStep: (stepName: string) => void;
   handleAccessStepList: (stepName: string, value: boolean) => void;
 }
 
-// async function checkEmail() {
-//   const response = await fetch('/todos', {
-//     method: 'GET',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//   });
-
-//   const data = await response.json();
-//   console.log(data);
-// }
+const fetchCheckEmail = async (email: { email: string }) => {
+  const response = await axiosInstance.post('/check-email', email);
+  return response;
+};
 
 const SignUpStep1 = ({
   handleCurrentStep,
   handleAccessStepList,
 }: SignUpStep1Props) => {
-  // const test = await checkEmail();
-  // console.log(test);
-
   const {
+    duplicateCheckedEmail,
+    setDuplicateCheckedEmail,
+    resetDuplicateCheckedEmail,
+  } = useAuthStore();
+  const {
+    getValues,
     register,
     trigger,
+    setError,
+    setFocus,
+    clearErrors,
     formState: { errors },
   } = useFormContext<SignUpFormDataType>();
-  const [isPending, setIsPending] = useState(false); //TODO: api붙일때 pending이용해서 스피너처리
-
-  const onClickSendEmail = async () => {
-    setIsPending(true);
-    setTimeout(() => {
-      setIsPending(false);
-    }, 2000);
-    // TODO: api 통해서 성공하면 성공했다는 노티, 실패하면 setError통해서하면될듯
-    // const response2 = await fetch('/todos', {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ email: 'user1@example.com' }),
-    // });
-    const response = await fetch('/api/check-email', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+  const { mutate, isPending } = useMutation<any, AxiosError, { email: string }>(
+    {
+      mutationFn: (email) => fetchCheckEmail(email),
+      onSuccess: (data) => {
+        // 요청 성공 시의 처리
+        if (data.status === 200) {
+          clearErrors('email');
+          setDuplicateCheckedEmail(getValues('email'));
+        }
       },
-      body: JSON.stringify({ email: 'user1@example.com' }),
-    });
-
-    // const data2 = await response2.json();
-    const data = await response.json();
-    console.log(data);
-    // console.log(data2);
+      onError: (error) => {
+        // 에러 처리
+        // console.error('에러 발생', error);
+        if (error.response?.status === 409) {
+          setError('email', {
+            type: 'duplicated',
+            message: '이미 사용중인 이메일입니다.',
+          });
+        }
+        resetDuplicateCheckedEmail();
+      },
+      onSettled: () => {
+        // 성공/실패와 관계없이 실행될 로직
+      },
+    },
+  );
+  const onClickCheckEmail = () => {
+    if (getValues('email') === duplicateCheckedEmail) {
+      return;
+    }
+    if (!getValues('email')) {
+      setError('email', {
+        type: 'required',
+        message: '이메일을 입력해주세요.',
+      });
+      return;
+    }
+    mutate({ email: getValues('email') });
   };
 
   const onClickNextStep = async () => {
-    const validCheck = await trigger(['email']);
+    if (
+      !duplicateCheckedEmail ||
+      duplicateCheckedEmail !== getValues('email')
+    ) {
+      setError('email', { message: '이메일 중복확인을 해주세요.' });
+      setFocus('email');
+      return;
+    }
+    const validCheck = await trigger(signupStepForms.step1);
     handleAccessStepList('step2', validCheck);
     if (!validCheck) {
       return;
@@ -86,18 +110,40 @@ const SignUpStep1 = ({
           errorMsg={errors.email?.message}
         >
           <button
-            onClick={onClickSendEmail}
+            onClick={onClickCheckEmail}
             type="button"
-            className="absolute right-2 top-1/2 flex w-16 -translate-y-1/2 transform justify-center rounded-lg border bg-[#38CCDD] py-2 font-semibold text-white hover:border-[#38CCDD] hover:bg-white hover:text-gray-500 focus:bg-white focus:text-gray-500"
+            className="absolute right-2 top-1/2 flex w-16 -translate-y-1/2 transform justify-center rounded-lg border bg-primary py-2 font-semibold text-white hover:opacity-75 focus:opacity-75"
           >
-            {isPending ? <Spinner color="#fff" /> : '인증'}
+            {isPending ? <Spinner color="#fff" size="25px" /> : '인증'}
           </button>
         </InputWithLabel>
       </div>
+      {duplicateCheckedEmail === getValues('email') &&
+        Object.keys(errors).length === 0 && (
+          <p className="flex items-center text-primary">
+            <span className="mr-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-3 w-3"
+                viewBox="0 0 20 20"
+                fill="#fff"
+                stroke="#fff"
+                strokeWidth="1"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clipRule="evenodd"
+                ></path>
+              </svg>
+            </span>
+            인증완료
+          </p>
+        )}
       <button
         type="button"
         onClick={onClickNextStep}
-        className="mt-6 block w-full rounded-lg border bg-[#38CCDD] px-4 py-3 font-semibold text-white hover:border-[#38CCDD] hover:bg-white hover:text-gray-500 focus:bg-white focus:text-gray-500"
+        className="mt-6 block w-full rounded-lg border bg-primary px-4 py-3 font-semibold text-white hover:opacity-75 focus:bg-opacity-75"
       >
         다음
       </button>

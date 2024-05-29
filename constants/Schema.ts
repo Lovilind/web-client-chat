@@ -1,47 +1,35 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { z } from 'zod';
+import { emailSchema, passwordSchema } from './CommonSchema';
 
 export const loginRegisterSchema = z.object({
-  email: z
-    .string()
-    .nonempty('이메일을 입력해주세요.')
-    .email('이메일 형식을 입력해주세요.'),
-  password: z
-    .string()
-    .nonempty('비밀번호를 입력해주세요.')
-    .regex(
-      /^(?=.*[!@#$%^*+=-]).{8,15}$/,
-      '특수문자를 포함한 8~15자리를 입력해주세요.',
-    ),
+  email: emailSchema,
+  password: passwordSchema,
 });
 
 export const signUpRegisterSchema = z
   .object({
-    email: z
+    email: emailSchema,
+    password: passwordSchema,
+    passwordCheck: passwordSchema,
+    nickname: z.string().nonempty('닉네임을 입력해주세요.'),
+    gender: z.string().nonempty('성별을 선택해주세요.'),
+    birth: z.string().nonempty('날짜를 선택해주세요.'),
+    phone: z
       .string()
-      .nonempty('이메일을 입력해주세요.')
-      .email('이메일 형식을 입력해주세요.'),
-    password: z
+      .nonempty('핸드폰 번호를 선택해주세요.')
+      .regex(/^[0-9]*$/, '핸드폰 번호는 숫자만 입력해주세요.')
+      .regex(/^01[016789]{1}?[0-9]{7,8}$/, '핸드폰 번호를 다시 확인해주세요.'),
+    university: z
       .string()
-      .nonempty('비밀번호를 입력해주세요.')
-      .regex(
-        /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/,
-        '영문+숫자+특수문자(! @ # $ % & * ?) 조합 8~15자리를 입력해주세요.',
-      ),
-    passwordCheck: z
-      .string()
-      .nonempty('비밀번호를 입력해주세요.')
-      .regex(
-        /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/,
-        '영문+숫자+특수문자(! @ # $ % & * ?) 조합 8~15자리를 입력해주세요.',
-      ),
-    universityName: z.string().nonempty('학교명을 입력해주세요.'),
+      .nonempty('학교명을 입력해주세요.')
+      .regex(/대학교$/, '학교명은 "대학교"로 끝나야 합니다.'),
   })
   .superRefine(({ passwordCheck, password }, ctx) => {
     if (passwordCheck !== password) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: '비밀번호를 다시 확인해주세요.',
+        message: '비밀번호가 일치하지 않습니다.',
         path: ['passwordCheck'],
       });
     }
