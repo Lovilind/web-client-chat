@@ -17,22 +17,35 @@ const CertificationEmail = ({
   const [isReset, setIsReset] = useState(false);
   const [isTimeoutOver, setIsTimeoutOver] = useState(false);
   const { mutateAsync, isPending } = useMutaitionEmailCertification();
-  const { register, getValues, setValue, setError } = useFormContext();
+  const { register, getValues, setValue, setError, setFocus } =
+    useFormContext();
 
   const cb = useCallback(() => {
     console.log('타이머종료');
     setIsTimeoutOver(true);
   }, []);
+  const checkCodeValidation = () => {
+    const code = getValues('code');
+    if (code.length !== 4) {
+      setError('email', {
+        type: 'invalid Length',
+        message: '인증번호는 4자리입니다.',
+      });
+      return false;
+    }
+    return true;
+  };
 
   const onClickCertification = async () => {
     // TODO: 인증 요청
-    console.log('getValues', getValues('code'));
-    if (isPending) return;
+    if (isPending || !checkCodeValidation()) {
+      setFocus('code');
+      return;
+    }
     await mutateAsync(
       { email: sendEmail, code: getValues('code') },
       {
         onSuccess: (data) => {
-          // 요청 성공 시의 처리
           console.log('인증 성공', data);
           if (data.status === 200) {
             onSuccessCertification();
@@ -40,7 +53,6 @@ const CertificationEmail = ({
           }
         },
         onError: (error) => {
-          // 에러 처리
           console.log(error);
           if (error.response?.status === 409) {
             setError('email', {
@@ -48,9 +60,6 @@ const CertificationEmail = ({
               message: '인증번호가 일지하지 않습니다.',
             });
           }
-        },
-        onSettled: () => {
-          // 성공/실패와 관계없이 실행될 로직
         },
       },
     );

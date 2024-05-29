@@ -41,6 +41,7 @@ const SignUpStep1 = ({
   const resetCertification = () => {
     sendEmailRef.current = '';
     resetDuplicateCheckedEmail();
+    handleAccessStepList('step2', false);
     setFocus('email');
   };
 
