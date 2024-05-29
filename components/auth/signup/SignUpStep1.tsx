@@ -1,25 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { SignUpFormDataType, signupStepForms } from './SignUpFormWrapper';
 import InputWithLabel from '../InputWithLabel';
 import Spinner from '@/components/common/Spinner';
-import axiosInstance from '@/utils/axiosInstance';
-import { useMutation } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import useAuthStore from '@/store/useAuthStore';
 import CertificationEmail from './CertificationEmail';
+import useFetchSendEmailCertification from '@/hooks/react-query/auth/useFetchSendEmailCertification';
 
 interface SignUpStep1Props {
   handleCurrentStep: (stepName: string) => void;
   handleAccessStepList: (stepName: string, value: boolean) => void;
 }
-
-const fetchCheckEmail = async (email: { email: string }) => {
-  const response = await axiosInstance.post('/check-email', email);
-  return response;
-};
 
 const SignUpStep1 = ({
   handleCurrentStep,
@@ -27,7 +19,7 @@ const SignUpStep1 = ({
 }: SignUpStep1Props) => {
   const {
     duplicateCheckedEmail,
-    // setDuplicateCheckedEmail,
+    setDuplicateCheckedEmail,
     resetDuplicateCheckedEmail,
   } = useAuthStore();
   const {
@@ -40,47 +32,53 @@ const SignUpStep1 = ({
     formState: { errors },
   } = useFormContext<SignUpFormDataType>();
   const sendEmailRef = useRef('');
-  const { mutate, isPending } = useMutation<any, AxiosError, { email: string }>(
-    {
-      mutationFn: (email) => fetchCheckEmail(email),
-      onSuccess: (data) => {
-        // 요청 성공 시의 처리
-        if (data.status === 200) {
-          clearErrors('email');
-          // setDuplicateCheckedEmail(getValues('email'));
-          sendEmailRef.current = getValues('email');
-        }
-      },
-      onError: (error) => {
-        // 에러 처리
-        if (error.response?.status === 409) {
-          setError('email', {
-            type: 'duplicated',
-            message: '이미 사용중인 이메일입니다.',
-          });
-        }
-        resetDuplicateCheckedEmail();
-      },
-      onSettled: () => {
-        // 성공/실패와 관계없이 실행될 로직
-      },
-    },
-  );
-  const onClickCheckEmail = () => {
-    if (getValues('email') === duplicateCheckedEmail) {
-      return;
-    }
-    if (!getValues('email')) {
-      setError('email', {
-        type: 'required',
-        message: '이메일을 입력해주세요.',
-      });
-      return;
-    }
-    mutate({ email: getValues('email') });
+
+  const { mutateAsync, isPending } = useFetchSendEmailCertification();
+
+  const validCheck = () => {
+    return trigger(signupStepForms.step1);
   };
   const resetCertification = () => {
     sendEmailRef.current = '';
+    resetDuplicateCheckedEmail();
+    setFocus('email');
+  };
+
+  const onClickCheckEmail = async () => {
+    if (isPending) return;
+    if (!(await validCheck())) {
+      setError('email', {
+        type: 'required',
+        message: '이메일을 확인해주세요.',
+      });
+      resetCertification();
+      return;
+    }
+    await mutateAsync(
+      { email: getValues('email') },
+      {
+        onSuccess: (data) => {
+          // 요청 성공 시의 처리
+          if (data.status === 200) {
+            clearErrors('email');
+            sendEmailRef.current = getValues('email');
+          }
+        },
+        onError: (error) => {
+          // 에러 처리
+          if (error.response?.status === 409) {
+            setError('email', {
+              type: 'duplicated',
+              message: '이미 사용중인 이메일입니다.',
+            });
+          }
+          resetDuplicateCheckedEmail();
+        },
+        onSettled: () => {
+          // 성공/실패와 관계없이 실행될 로직
+        },
+      },
+    );
   };
 
   const onClickNextStep = async () => {
@@ -92,12 +90,17 @@ const SignUpStep1 = ({
       setFocus('email');
       return;
     }
-    const validCheck = await trigger(signupStepForms.step1);
-    handleAccessStepList('step2', validCheck);
-    if (!validCheck) {
-      return;
+    const valid = await validCheck();
+    handleAccessStepList('step2', valid);
+    if (valid) {
+      handleCurrentStep('step2');
     }
-    handleCurrentStep('step2');
+  };
+
+  const onSuccessCertification = () => {
+    clearErrors('email');
+    resetCertification();
+    setDuplicateCheckedEmail(getValues('email'));
   };
 
   return (
@@ -112,10 +115,11 @@ const SignUpStep1 = ({
           register={register('email', {
             required: true,
           })}
-          isReadOnly={!!sendEmailRef.current}
-          // errorMsg={errors.email?.message}
+          isReadOnly={
+            sendEmailRef.current || duplicateCheckedEmail ? true : false
+          }
         >
-          {sendEmailRef.current ? (
+          {sendEmailRef.current || duplicateCheckedEmail ? (
             <button
               onClick={resetCertification}
               className="absolute right-2 top-1/2 flex -translate-y-1/2 transform justify-center rounded-full bg-gray-300 px-2 font-semibold text-white hover:opacity-75"
@@ -133,7 +137,13 @@ const SignUpStep1 = ({
           )}
         </InputWithLabel>
       </div>
-      {sendEmailRef.current && <CertificationEmail />}
+      {sendEmailRef.current && (
+        <CertificationEmail
+          sendEmail={sendEmailRef.current}
+          onClickCheckEmail={onClickCheckEmail}
+          onSuccessCertification={onSuccessCertification}
+        />
+      )}
       {errors.email && <p className="text-red-600">{errors.email?.message}</p>}
       {duplicateCheckedEmail === getValues('email') &&
         Object.keys(errors).length === 0 && (

@@ -10,6 +10,9 @@ export const loginRegisterSchema = z.object({
 export const signUpRegisterSchema = z
   .object({
     email: emailSchema,
+    code: z.string(),
+    // .nonempty('인증번호를 입력해주세요.')
+    // .length(4, '인증번호는 4자리입니다.'),
     password: passwordSchema,
     passwordCheck: passwordSchema,
     nickname: z.string().nonempty('닉네임을 입력해주세요.'),

@@ -93,6 +93,7 @@ const SignUpFormWrapper = () => {
 
   const submitForm = (data: SignUpFormDataType) => {
     console.log(data);
+    // TODO: 회원가입 API 호출, code값 제거필요
     alert('회원가입 완료');
     router.push('/');
   };

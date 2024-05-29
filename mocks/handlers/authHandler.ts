@@ -2,10 +2,11 @@ import { http, HttpResponse } from 'msw';
 
 const registeredEmails = ['test@test.com', 'user2@example.com'];
 
-const certificationEmailNumber = '1234';
+const certificationEmailNumber = { email: 'test1@example.com', code: '1234' };
 
 const registeredUsersEmailsAndPasswords = [
   { email: 'test@test.com', password: 'qwer123!' },
+  { email: 'user2@example.com', password: 'qwer123!' },
 ];
 
 /* 
@@ -27,9 +28,12 @@ export const authHandler = [
     try {
       const body = await request.json();
 
-      const { code } = body as { code: string };
+      const { email, code } = body as { email: string; code: string };
 
-      if (code !== certificationEmailNumber) {
+      if (
+        certificationEmailNumber.email !== email ||
+        certificationEmailNumber.code !== code
+      ) {
         return HttpResponse.json(
           {
             message: '인증번호가 일치하지 않습니다.',
