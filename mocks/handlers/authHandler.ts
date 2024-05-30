@@ -2,8 +2,11 @@ import { http, HttpResponse } from 'msw';
 
 const registeredEmails = ['test@test.com', 'user2@example.com'];
 
+const certificationEmailNumber = { email: 'test1@example.com', code: '1234' };
+
 const registeredUsersEmailsAndPasswords = [
   { email: 'test@test.com', password: 'qwer123!' },
+  { email: 'user2@example.com', password: 'qwer123!' },
 ];
 
 /* 
@@ -21,29 +24,77 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuaWNrbmF
 */
 
 export const authHandler = [
-  // 이메일 중복 확인
-  http.post('/api/check-email', async ({ request }) => {
-    // console.log(request.body.getReader('email'));
-    // const data = await request.formData();
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    const { email } = await request.json();
-    console.log(email);
+  http.post('/api/certification-email', async ({ request }) => {
+    try {
+      const body = await request.json();
 
-    if (registeredEmails.includes(email)) {
+      const { email, code } = body as { email: string; code: string };
+
+      if (
+        certificationEmailNumber.email !== email ||
+        certificationEmailNumber.code !== code
+      ) {
+        return HttpResponse.json(
+          {
+            message: '인증번호가 일치하지 않습니다.',
+          },
+          { status: 409 },
+        );
+      }
+
       return HttpResponse.json(
         {
-          message: 'Email already exists',
+          message: '이메일 인증이 완료되었습니다.',
         },
-        { status: 409 },
+        { status: 200 },
+      );
+    } catch (error) {
+      console.error('Error parsing JSON:', error);
+      return HttpResponse.json(
+        {
+          message: '잘못된 요청입니다.',
+        },
+        { status: 400 },
       );
     }
+  }),
 
-    return HttpResponse.json(
-      {
-        message: 'Email is available',
-      },
-      { status: 200 },
-    );
+  // 이메일 중복 확인
+
+  http.post('/api/check-email', async ({ request }) => {
+    try {
+      const body = await request.json();
+
+      const { email } = body as { email: string };
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      // 이메일 중복 확인
+      if (registeredEmails.includes(email)) {
+        return HttpResponse.json(
+          {
+            message: '이미 가입된 이메일입니다.',
+          },
+          { status: 409 },
+        );
+      }
+
+      // 중복되지 않은 경우
+      return HttpResponse.json(
+        {
+          message: '인증번호를 전송했습니다.',
+        },
+        { status: 200 },
+      );
+    } catch (error) {
+      console.error('Error parsing JSON:', error);
+      return HttpResponse.json(
+        {
+          message: '잘못된 요청입니다.',
+        },
+        { status: 400 },
+      );
+    }
   }),
 
   // 로그인

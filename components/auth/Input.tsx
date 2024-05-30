@@ -1,4 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
+import { cn } from '@/utils/cn';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 export interface InputProps {
@@ -28,7 +29,9 @@ const Input = ({
     <>
       <div className="relative mt-2">
         <input
-          className={`w-full rounded-lg border px-4 py-3 text-gray-700 focus:border-[#38CCDD] focus:outline-none ${addInputClassName}`}
+          className={cn(
+            `w-full rounded-lg border px-4 py-3 text-gray-700 focus:border-[#38CCDD] focus:outline-none ${addInputClassName}`,
+          )}
           id={id}
           type={type}
           maxLength={maxLength}
