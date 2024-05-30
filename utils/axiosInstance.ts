@@ -2,8 +2,9 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  // baseURL: 'http://localhost:3000/api',
-  baseURL: 'http://localhost:3001/api',
+  baseURL: 'https://api.lovlind.me/api',
+  // baseURL: 'http://localhost:3000',
+  // baseURL: 'http://localhost:3001',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -13,6 +14,10 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
+    console.log(config);
+    if (config.url?.startsWith('/msw')) {
+      config.baseURL = 'http://localhost:3000';
+    }
     return config;
   },
   (error) => Promise.reject(error),

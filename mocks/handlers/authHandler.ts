@@ -24,7 +24,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuaWNrbmF
 */
 
 export const authHandler = [
-  http.post('/api/certification-email', async ({ request }) => {
+  http.post('/msw/certification-email', async ({ request }) => {
     try {
       const body = await request.json();
 
@@ -61,7 +61,7 @@ export const authHandler = [
 
   // 이메일 중복 확인
 
-  http.post('/api/check-email', async ({ request }) => {
+  http.post('/msw/check-email', async ({ request }) => {
     try {
       const body = await request.json();
 
@@ -98,7 +98,7 @@ export const authHandler = [
   }),
 
   // 로그인
-  http.post('/api/signin', ({ request }) => {
+  http.post('/msw/signin', ({ request }) => {
     const { email, password } = request.body;
 
     return HttpResponse.status(201).json({
@@ -106,7 +106,7 @@ export const authHandler = [
     });
   }),
   // 회원가입
-  http.post('/api/signup', ({ request }) => {
+  http.post('/msw/signup', ({ request }) => {
     const { email } = request.body;
 
     if (registeredEmails.includes(email)) {

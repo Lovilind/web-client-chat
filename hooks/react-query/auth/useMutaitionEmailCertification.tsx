@@ -5,7 +5,10 @@ import { AxiosError } from 'axios';
 import axiosInstance from '@/utils/axiosInstance';
 
 const fetchCheckEmail = async (payload: { email: string; code: string }) => {
-  const response = await axiosInstance.post('/certification-email', payload);
+  const response = await axiosInstance.post(
+    '/msw/certification-email',
+    payload,
+  );
   return response;
 };
 
