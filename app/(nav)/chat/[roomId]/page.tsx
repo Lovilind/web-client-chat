@@ -1,9 +1,9 @@
 import React from 'react';
-import ChatRoom from './(components)/ChatRoom';
+import ChatRoom from './(components)/ChatRoom/ChatRoom';
 
 export default function RoomId({ params }: { params: { roomId: string } }) {
   return (
-    <section className="h-full w-full max-w-screen-md	bg-blue-200 p-3">
+    <section className="w-full bg-[#D2E9EA] lg:flex-1">
       <ChatRoom roomId={params.roomId} />
     </section>
   );
