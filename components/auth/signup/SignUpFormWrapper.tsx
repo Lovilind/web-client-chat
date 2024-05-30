@@ -51,7 +51,7 @@ const SignUpButton = ({
     <button
       type="submit"
       onClick={formValidCheck}
-      className="mt-6 block w-full rounded-lg border bg-[#38CCDD] px-4 py-3 font-semibold text-white hover:border-[#38CCDD] hover:bg-white hover:text-gray-500 focus:bg-white focus:text-gray-500"
+      className="mt-6 block w-full rounded-lg border bg-[#38CCDD] px-4 py-3 font-semibold text-white hover:opacity-75 "
     >
       회원가입
     </button>

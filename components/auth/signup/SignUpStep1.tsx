@@ -147,8 +147,8 @@ const SignUpStep1 = ({
       )}
       {errors.email && <p className="text-red-600">{errors.email?.message}</p>}
       {duplicateCheckedEmail === getValues('email') && !errors.email && (
-        <p className="flex items-center text-primary">
-          <span className="mr-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary">
+        <p className="mt-1 flex items-center text-primary-medium">
+          <span className="mr-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary-medium">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-3 w-3"
