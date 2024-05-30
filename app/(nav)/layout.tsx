@@ -1,12 +1,8 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import '@/app/globals.css';
-import { CounterStoreProvider } from '@/store/providers/sample-store-provider';
-import { MockProvider } from '@/app/MswProvider';
-import Image from 'next/image';
-import Link from 'next/link';
-
-const inter = Inter({ subsets: ['latin'] });
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import BottomNav from '@/components/BottomNav';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -19,16 +15,13 @@ export default function CommonLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div>
-      <header className="pl-4 pt-4">
-        <Link href={'/'}>
-          <Image width={60} height={60} src={'/images/logo.png'} alt="logo" />
-        </Link>
-      </header>
-      <div className={inter.className}>{children}</div>
-      <footer>
-        <Link href={'/'}>copyright@를 빙자한 홈으로 가기 버튼</Link>
-      </footer>
-    </div>
+    <>
+      <div>
+        <Header />
+        <div>{children}</div>
+        <Footer />
+      </div>
+      <BottomNav />
+    </>
   );
 }
