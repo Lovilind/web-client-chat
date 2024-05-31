@@ -4,8 +4,16 @@ import React from 'react';
 const NotFound = () => {
   return (
     <div
-      className="flex min-h-screen items-center justify-center  bg-indigo-500 bg-cover bg-fixed bg-bottom"
-      style={{ backgroundImage: "url('https://source.unsplash.com/random')" }}
+      className="flex min-h-screen items-center justify-center overflow-hidden"
+      style={{
+        backgroundImage:
+          // "url('https://cdn.pixabay.com/photo/2022/05/25/03/34/sea-view-7219685_1280.jpg')",
+          "url('https://cdn.pixabay.com/photo/2022/02/20/14/11/couple-7024636_1280.jpg')",
+        // backgroundImage: "url('https://source.unsplash.com/random')",
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+      }}
     >
       <div className="container">
         <div className="row">
@@ -17,7 +25,7 @@ const NotFound = () => {
                 <span>4</span>
               </h1>
             </div>
-            <h5 className="-mr-10 -mt-3 font-semibold text-gray-300">
+            <h5 className="-mr-10 -mt-3 font-semibold text-white">
               잘못된 경로로 접근하셨습니다.
             </h5>
             <p className="mb-6 mt-2 text-gray-100"></p>
@@ -25,7 +33,7 @@ const NotFound = () => {
               href={'/'}
               className="rounded-full bg-primary px-5 py-3 text-sm font-medium tracking-wider text-gray-50 shadow-sm hover:opacity-70 hover:shadow-lg"
             >
-              메인페이지로
+              돌아가기
             </Link>
           </div>
         </div>
