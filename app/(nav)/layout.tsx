@@ -16,10 +16,12 @@ export default function CommonLayout({
 }) {
   return (
     <>
-      <div>
+      <div className="min-h-screen lg:flex">
         <Header />
-        <div>{children}</div>
-        <Footer />
+        <div className="flex-1">
+          {children}
+          <Footer />
+        </div>
       </div>
       <BottomNav />
     </>

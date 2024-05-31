@@ -15,6 +15,9 @@ export default function Home() {
       <Link href={'/chat'}>
         <button>채팅방 입장</button>
       </Link>
+      <Link href={'/mypage'}>
+        <button>마이페이지</button>
+      </Link>
     </main>
   );
 }
