@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@hookform/resolvers": "^3.4.0",
+    "@svgr/webpack": "^8.1.0",
     "@tanstack/react-query-devtools": "^5.37.1",
     "@types/node": "^20",
     "@types/react": "^18",

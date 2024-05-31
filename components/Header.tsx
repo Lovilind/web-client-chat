@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
+// import IconMessage from '/public/images/svgs/message-icon.svg';
+import { IconMessage, IconPerson } from '@/components/icons/index';
 
 const Header = () => {
   return (
@@ -15,12 +17,19 @@ const Header = () => {
               alt="logo"
             />
           </Link>
-          <nav className="hidden items-center text-lg lg:flex lg:flex-col">
-            <Link href={'/'} className="flex px-6 py-2">
-              소개
-            </Link>
+          <nav className="hidden items-center gap-4 text-lg lg:flex lg:flex-col">
             <Link href={'/chat'} className="flex px-6 py-2">
-              채팅
+              <i className="w-10">
+                <IconMessage
+                  stroke={'#000'}
+                  className=" hover:stroke-primary"
+                />
+              </i>
+            </Link>
+            <Link href={'/mypage'} className="flex px-6 py-2">
+              <i className="w-10">
+                <IconPerson className="hover:fill-primary" />
+              </i>
             </Link>
           </nav>
           <div className="lg:hidden">
