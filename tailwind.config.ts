@@ -19,6 +19,13 @@ const config: Config = {
         'primary-light': '#B9DFE4',
         'primary-lightest': '#D2E9EA',
       },
+      zIndex: {
+        1: '1',
+        2: '2',
+        3: '3',
+        4: '4',
+        5: '5',
+      },
     },
   },
   plugins: [],
