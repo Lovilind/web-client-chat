@@ -1,3 +1,5 @@
+import ProfilePageContainer from '@/components/mypage/profile/ProfilePageContainer';
+import UserFormPageContainer from '@/components/mypage/userform/UserFormPageContainer';
 import { notFound } from 'next/navigation';
 
 interface SettingPageParams {
@@ -6,9 +8,9 @@ interface SettingPageParams {
 const SettingPage = ({ params }: SettingPageParams) => {
   switch (params.setting) {
     case 'profile':
-      return <div>profile</div>;
+      return <ProfilePageContainer />;
     case 'userform':
-      return <div>userinfo</div>;
+      return <UserFormPageContainer />;
     case 'customer-service':
       return <div>userinfo</div>;
     default:

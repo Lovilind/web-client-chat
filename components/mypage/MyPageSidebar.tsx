@@ -9,7 +9,7 @@ const sidebarData = [
   { href: '/mypage/profile', label: '프로필', icon: <IconPerson /> },
   {
     href: '/mypage/userform',
-    label: '유저성향',
+    label: '나의성향',
     icon: <IconUserBook className="stroke-black" />,
   },
   {

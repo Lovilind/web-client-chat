@@ -15,7 +15,11 @@ const MyPageLayout = ({ children }: MyPageLayoutProps) => {
           <MyPageSidebar />
         </div>
       </SideContainder>
-      <div className="flex-1">{children}</div>
+      <section className="flex-1 py-10 pr-5">
+        <div className="min-h-full rounded-3xl border p-5 shadow-md">
+          {children}
+        </div>
+      </section>
     </div>
   );
 };
