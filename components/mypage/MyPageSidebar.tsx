@@ -42,7 +42,7 @@ const MyPageSidebarItem = (props: {
 
 const MyPageSidebar = () => {
   return (
-    <aside className="mx-auto w-full max-w-2xl flex-1" aria-label="Sidebar">
+    <aside className="mx-auto w-full flex-1" aria-label="Sidebar">
       <div className="h-full overflow-hidden rounded-3xl bg-white px-3 py-4 ">
         <ul className="space-y-2">
           {sidebarData.map((item, index) => (

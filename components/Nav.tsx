@@ -37,7 +37,9 @@ const Nav = () => {
         <Link
           key={index}
           href={nav.href}
-          className="group mx-auto flex w-full flex-col items-center justify-center px-4 py-2 pt-2 text-center text-gray-400"
+          className={cn(
+            `group mx-auto flex w-full flex-col items-center justify-center rounded-lg px-4 py-2 text-center text-gray-400 hover:bg-gray-100 ${pathName.startsWith(nav.href) && nav.href !== '/' ? 'bg-gray-100' : ''}`,
+          )}
         >
           <i className="w-8">
             <nav.icon
@@ -48,7 +50,7 @@ const Nav = () => {
           </i>
           <span
             className={cn(
-              `block pb-2 text-xs group-hover:text-primary-medium ${pathName.startsWith(nav.href) && nav.href !== '/' ? 'text-primary-medium' : ''}`,
+              `block text-xs group-hover:text-primary-medium ${pathName.startsWith(nav.href) && nav.href !== '/' ? 'text-primary-medium' : ''}`,
             )}
           >
             {nav.text}
