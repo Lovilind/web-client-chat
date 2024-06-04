@@ -42,13 +42,13 @@ const Nav = () => {
           <i className="w-8">
             <nav.icon
               className={cn(
-                `${nav.iconClassName} ${nav.href === pathName ? nav.hoverClassName : ''}`,
+                `${nav.iconClassName} ${pathName.startsWith(nav.href) && nav.href !== '/' ? nav.hoverClassName : ''}`,
               )}
             />
           </i>
           <span
             className={cn(
-              `block pb-2 text-xs group-hover:text-primary-medium ${nav.href === pathName ? 'text-primary-medium' : ''}`,
+              `block pb-2 text-xs group-hover:text-primary-medium ${pathName.startsWith(nav.href) && nav.href !== '/' ? 'text-primary-medium' : ''}`,
             )}
           >
             {nav.text}
