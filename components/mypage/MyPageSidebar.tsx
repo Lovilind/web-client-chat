@@ -1,9 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { IconCustomerService, IconPerson, IconUserBook } from '../icons';
+import {
+  IconArrow,
+  IconCustomerService,
+  IconPerson,
+  IconUserBook,
+} from '../icons';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/utils/cn';
+import { useState } from 'react';
 
 const sidebarData = [
   { href: '/mypage/profile', label: '프로필', icon: <IconPerson /> },
@@ -18,6 +24,9 @@ const sidebarData = [
     icon: <IconCustomerService className="fill-black" />,
   },
 ];
+
+const groupHoverClassName =
+  'group-hover:border-black group-hover:transition-colors group-hover:duration-500 group-hover:ease-in-out';
 
 const MyPageSidebarItem = (props: {
   item: { href: string; label: string; icon: React.ReactNode };
@@ -41,16 +50,34 @@ const MyPageSidebarItem = (props: {
 };
 
 const MyPageSidebar = () => {
+  const [isOpenSidebar, setIsOpenSidebar] = useState(false);
+  const handleIsOpenSidebar = () => {
+    setIsOpenSidebar(!isOpenSidebar);
+  };
   return (
-    <aside className="mx-auto w-full flex-1" aria-label="Sidebar">
-      <div className="h-full overflow-hidden rounded-3xl bg-white px-3 py-4 ">
-        <ul className="space-y-2">
-          {sidebarData.map((item, index) => (
-            <MyPageSidebarItem key={index} item={item} />
-          ))}
-        </ul>
-      </div>
-    </aside>
+    <div className="relative">
+      <aside
+        className={`relative mx-auto w-full flex-1 overflow-hidden transition-all duration-500 ease-in-out ${!isOpenSidebar ? 'max-h-screen' : 'max-h-0'} lg:max-h-max`}
+        aria-label="Sidebar"
+      >
+        <div className="h-full overflow-hidden rounded-3xl bg-white px-3 py-4 ">
+          <ul className="space-y-2">
+            {sidebarData.map((item, index) => (
+              <MyPageSidebarItem key={index} item={item} />
+            ))}
+          </ul>
+        </div>
+      </aside>
+      <button onClick={handleIsOpenSidebar} className="group">
+        <i
+          className={`absolute -bottom-4 right-1/2 inline-block h-8 w-8 translate-x-1/2 rounded-full border-2 bg-white group-hover:border-primary lg:hidden  ${groupHoverClassName}`}
+        >
+          <IconArrow
+            className={`fill-gray-300 group-hover:fill-primary ${groupHoverClassName}  ${!isOpenSidebar ? 'rotate-180' : 'rotate-0'}`}
+          />
+        </i>
+      </button>
+    </div>
   );
 };
 
