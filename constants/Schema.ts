@@ -23,3 +23,5 @@ export const signUpRegisterSchema = z
       });
     }
   });
+
+export const userFormSchema = z.object({ test: z.string() });
