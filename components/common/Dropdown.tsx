@@ -1,5 +1,6 @@
 import { useLayoutEffect, useState } from 'react';
 import { IconArrow } from '../icons';
+import useClickOutsideHandler from '@/hooks/useClickOutsideHandler';
 
 interface DropdownProps {
   initialValue?: string;
@@ -17,12 +18,15 @@ const Dropdown = ({
   const handleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+  const dropdownRef = useClickOutsideHandler({
+    callback: handleDropdown,
+    isOpen: isDropdownOpen,
+  });
 
   const onClickDropdownItem = (target: string) => {
-    console.log(target);
     getTargetValue(target);
     setValueText(target);
-    setIsDropdownOpen(false);
+    handleDropdown();
   };
   useLayoutEffect(() => {
     if (initialValue) {
@@ -30,7 +34,7 @@ const Dropdown = ({
     }
   }, [initialValue]);
   return (
-    <div className="group relative w-full">
+    <div ref={dropdownRef} className="group relative w-full">
       <button
         type="button"
         onClick={handleDropdown}
