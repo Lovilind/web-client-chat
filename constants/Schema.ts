@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { z } from 'zod';
 import { emailSchema, passwordSchema } from './CommonSchema';
+import { mbtiList } from './mbti';
 
 export const loginRegisterSchema = z.object({
   email: emailSchema,
@@ -24,4 +25,4 @@ export const signUpRegisterSchema = z
     }
   });
 
-export const userFormSchema = z.object({ test: z.string() });
+export const userFormSchema = z.object({ mbti: z.enum(mbtiList) });

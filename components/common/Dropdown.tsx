@@ -4,18 +4,23 @@ import useClickOutsideHandler from '@/hooks/useClickOutsideHandler';
 
 interface DropdownProps {
   initialValue?: string;
+  isDisabled?: boolean;
   dropdownList: readonly string[] | string[];
   getTargetValue: (target: string) => void;
 }
 
 const Dropdown = ({
   initialValue,
+  isDisabled,
   dropdownList,
   getTargetValue,
 }: DropdownProps) => {
   const [valueText, setValueText] = useState<string>('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const handleDropdown = () => {
+    if (isDisabled) {
+      return;
+    }
     setIsDropdownOpen(!isDropdownOpen);
   };
   const dropdownRef = useClickOutsideHandler({
@@ -38,13 +43,15 @@ const Dropdown = ({
       <button
         type="button"
         onClick={handleDropdown}
-        className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-gray-100 "
+        className={`inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm focus:outline-none focus:ring-2 ${isDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer focus:ring-primary focus:ring-offset-2 focus:ring-offset-gray-100'}`}
       >
         <span className="mr-2 flex-1 text-start">
           {!valueText ? '선택 해주세요.' : valueText}
         </span>
         <i className="h-6 w-6">
-          <IconArrow className="fill-black" />
+          <IconArrow
+            className={`${isDisabled ? 'fill-gray-400' : 'fill-black'}`}
+          />
         </i>
       </button>
 
