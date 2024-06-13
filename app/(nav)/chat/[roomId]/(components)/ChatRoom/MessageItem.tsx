@@ -13,7 +13,7 @@ export default function MessageItem({ messageData }: MessageItemProps) {
   if (user && messageData.nickname.includes(user)) {
     return (
       <div className="flex flex-row-reverse items-end gap-2">
-        <div className="bg-primary mr-3 max-w-[60%] whitespace-pre-wrap break-words	 break-all	rounded-xl px-4 py-2 text-sm shadow">
+        <div className="mr-3 max-w-[60%] whitespace-pre-wrap break-words break-all	 rounded-xl	bg-primary px-4 py-2 text-sm shadow">
           {messageData.message}
         </div>
         <div className="flex flex-col items-end text-xs">

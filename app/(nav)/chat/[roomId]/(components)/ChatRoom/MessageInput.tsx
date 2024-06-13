@@ -68,12 +68,12 @@ export default function MessageInput({
         rows={1}
         ref={inputRef}
         name="chat"
-        className=" focus:ring-primary dark:focus:border-primary dark:focus:ring-primary block h-[40px] w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none dark:border-gray-300 dark:bg-white  dark:placeholder-gray-400"
+        className="block h-[40px] w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-primary dark:border-gray-300 dark:bg-white dark:placeholder-gray-400 dark:focus:border-primary  dark:focus:ring-primary"
         placeholder="메세지를 입력하세요"
       />
       <button
         type="submit"
-        className="hover:text-primary inline-flex cursor-pointer justify-center p-2 text-blue-400"
+        className="inline-flex cursor-pointer justify-center p-2 text-blue-400 hover:text-primary"
       >
         <svg
           className="h-6 w-6 rotate-90"

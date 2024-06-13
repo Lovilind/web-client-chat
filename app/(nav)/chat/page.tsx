@@ -1,9 +1,6 @@
 'use client';
 
 import { ChattingRoomItem } from '@/components/ChattingRoomItem';
-
-import { GlobalNavigation } from '@/components/GlobalNavigation';
-import { TopHeader } from '@/components/TopHeader';
 import Link from 'next/link';
 
 export default function Chat() {
@@ -15,7 +12,6 @@ export default function Chat() {
   return (
     <article className="page-container chat">
       <div className="fx-col fx-cntn-cntr layout-contents">
-        <TopHeader onClickTopHeader={onClickFromChat} />
         <div className="wrap-contents def-padng-sd">
           <section className="wrap-contents-head fx-rw fx-algn-cntr">
             <div className="box-head-left">
@@ -24,7 +20,7 @@ export default function Chat() {
             <div className="box-head-right">
               <button
                 className="filter-button wrap-btn"
-                onClick={(e: unknown) =>
+                onClick={() =>
                   onClickFromChat('ON_CLICK_CHATTING_LIST_FILTER_BUTTON')
                 }
               >
@@ -54,7 +50,6 @@ export default function Chat() {
             </Link>
           </ul>
         </div>
-        <GlobalNavigation onClickGlobalNavigation={onClickFromChat} />
       </div>
     </article>
   );
