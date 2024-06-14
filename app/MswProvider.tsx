@@ -7,14 +7,14 @@ export function MswProvider({
   children: React.ReactNode;
 }>) {
   useEffect(() => {
+    // return; // msw적용안하려면 여기서 리턴하면됨
     async function enableApiMocking() {
       if (typeof window === 'undefined') {
         const { server: serverWorker } = await import('../mocks/server');
-        console.log(serverWorker);
         serverWorker.listen();
       } else {
         const { worker } = await import('../mocks/browser');
-        await worker.start();
+        await worker.start({ onUnhandledRequest: 'bypass' });
       }
     }
 
