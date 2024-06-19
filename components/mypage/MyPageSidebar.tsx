@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import {
   IconArrow,
-  IconCustomerService,
+  // IconCustomerService,
   IconPerson,
   IconUserBook,
 } from '../icons';
@@ -18,11 +18,11 @@ const sidebarData = [
     label: '나의성향',
     icon: <IconUserBook className="stroke-black" />,
   },
-  {
-    href: '/mypage/customer-service',
-    label: '고객센터',
-    icon: <IconCustomerService className="fill-black" />,
-  },
+  // {
+  //   href: '/mypage/customer-service',
+  //   label: '고객센터',
+  //   icon: <IconCustomerService className="fill-black" />,
+  // },
 ];
 
 const groupHoverClassName =

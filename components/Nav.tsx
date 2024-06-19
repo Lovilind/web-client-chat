@@ -3,8 +3,17 @@ import Link from 'next/link';
 import { IconHome, IconMessage, IconPerson } from '@/components/icons/index';
 import { cn } from '@/utils/cn';
 import { usePathname } from 'next/navigation';
+import React from 'react';
 
-const navList = [
+interface NavListProps {
+  href: string;
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  text: string;
+  iconClassName: string;
+  hoverClassName: string;
+}
+
+const navList: NavListProps[] = [
   {
     href: '/',
     icon: IconHome,
@@ -31,6 +40,11 @@ const navList = [
 const Nav = () => {
   const pathName = usePathname();
 
+  const getSvgClassName = (nav: NavListProps): string => {
+    // pathName과 nav.href가 일치하면 hoverClassName을 추가한다.
+    return `${nav.iconClassName} ${pathName.startsWith(nav.href) && nav.href !== '/' ? nav.hoverClassName : ''}`;
+  };
+
   return (
     <nav className="flex lg:flex-col lg:gap-4">
       {navList.map((nav, index) => (
@@ -42,11 +56,7 @@ const Nav = () => {
           )}
         >
           <i className="w-8">
-            <nav.icon
-              className={cn(
-                `${nav.iconClassName} ${pathName.startsWith(nav.href) && nav.href !== '/' ? nav.hoverClassName : ''}`,
-              )}
-            />
+            <nav.icon className={cn(getSvgClassName(nav))} />
           </i>
           <span
             className={cn(
