@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { z } from 'zod';
 import { emailSchema, passwordSchema } from './CommonSchema';
 import { mbtiList } from './mbti';

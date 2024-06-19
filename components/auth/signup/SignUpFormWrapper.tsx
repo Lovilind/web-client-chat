@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 'use client';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { signUpRegisterSchema } from '@/constants/Schema';

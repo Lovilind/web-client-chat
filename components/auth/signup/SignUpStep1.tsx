@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import React, { useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { SignUpFormDataType, signupStepForms } from './SignUpFormWrapper';

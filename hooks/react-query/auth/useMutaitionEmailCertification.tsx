@@ -6,9 +6,13 @@ import axiosInstance from '@/utils/axiosInstance';
 
 const fetchCheckEmail = async (payload: { email: string; code: string }) => {
   const response = await axiosInstance.post(
-    '/msw/certification-email',
+    `/sign/issue?email=${email}`,
     payload,
   );
+  // const response = await axiosInstance.post(
+  //   '/msw/certification-email',
+  //   payload,
+  // );
   return response;
 };
 

@@ -14,9 +14,14 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    console.log(config);
     if (config.url?.startsWith('/msw')) {
+      // if (config.url?.startsWith('/msw')) {
       config.baseURL = 'http://localhost:3000';
+    }
+    if (config.url?.startsWith('/auth')) {
+      console.log('config', config);
+      // if (config.url?.startsWith('/msw')) {
+      config.baseURL = 'http://localhost:3000/api';
     }
     return config;
   },
