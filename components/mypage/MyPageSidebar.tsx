@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import {
-  IconArrow,
+  IconChevron,
   // IconCustomerService,
   IconPerson,
   IconUserBook,
@@ -72,7 +72,7 @@ const MyPageSidebar = () => {
         <i
           className={`absolute -bottom-4 right-1/2 inline-block h-8 w-8 translate-x-1/2 rounded-full border-2 bg-white group-hover:border-primary lg:hidden  ${groupHoverClassName}`}
         >
-          <IconArrow
+          <IconChevron
             className={`fill-gray-300 group-hover:fill-primary ${groupHoverClassName}  ${!isOpenSidebar ? 'rotate-180' : 'rotate-0'}`}
           />
         </i>

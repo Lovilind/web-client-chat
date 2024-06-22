@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState } from 'react';
-import { IconArrow } from '../icons';
+import { IconChevron } from '../icons';
 import useClickOutsideHandler from '@/hooks/useClickOutsideHandler';
 
 interface DropdownProps {
@@ -49,7 +49,7 @@ const Dropdown = ({
           {!valueText ? '선택 해주세요.' : valueText}
         </span>
         <i className="h-6 w-6">
-          <IconArrow
+          <IconChevron
             className={`${isDisabled ? 'fill-gray-400' : 'fill-black'}`}
           />
         </i>

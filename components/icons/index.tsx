@@ -4,6 +4,7 @@ import IconHome from '/public/images/svgs/home.svg';
 import IconUserBook from '/public/images/svgs/book-user.svg';
 import IconCustomerService from '/public/images/svgs/customer-service.svg';
 import IconArrow from '/public/images/svgs/arrow.svg';
+import IconChevron from '/public/images/svgs/chevron.svg';
 import IconCheck from '/public/images/svgs/check.svg';
 
 export {
@@ -13,5 +14,6 @@ export {
   IconUserBook,
   IconCustomerService,
   IconArrow,
+  IconChevron,
   IconCheck,
 };
