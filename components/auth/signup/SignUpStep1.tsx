@@ -1,11 +1,14 @@
-import React, { useRef } from 'react';
+/* eslint-disable @typescript-eslint/no-use-before-define */
+import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { SignUpFormDataType, signupStepForms } from './SignUpFormWrapper';
 import InputWithLabel from '../InputWithLabel';
 import Spinner from '@/components/common/Spinner';
 import useAuthStore from '@/store/useAuthStore';
 import CertificationEmail from './CertificationEmail';
-import useFetchSendEmailCertification from '@/hooks/react-query/auth/useFetchSendEmailCertification';
+import useGetCheckValidEmail from '@/hooks/react-query/auth/useGetCheckValidEmail';
+import useGetSendEmailCertification from '@/hooks/react-query/auth/useGetSendEmailCertification';
+import { IconCheck } from '@/components/icons';
 
 interface SignUpStep1Props {
   handleCurrentStep: (stepName: string) => void;
@@ -30,22 +33,34 @@ const SignUpStep1 = ({
     clearErrors,
     formState: { errors },
   } = useFormContext<SignUpFormDataType>();
-  const sendEmailRef = useRef('');
 
-  const { mutateAsync, isPending } = useFetchSendEmailCertification();
+  const [isOpenCertificationEmail, setIsOpenCertificationEmail] =
+    useState(false);
 
-  const validCheck = () => {
+  const {
+    isLoading: getCheckValidEmailIsLoading,
+    refetch: getCheckValidEmailRefetch,
+  } = useGetCheckValidEmail({
+    email: getValues('email'),
+  });
+  const { refetch: getSendEmailCertificationRefetch } =
+    useGetSendEmailCertification({
+      email: getValues('email'),
+    });
+
+  const validCheck = async () => {
+    // 파라미터로넘기는 특정 파트([키,키 ...] 형식) 폼검사 통과시 true, 실패시 false
     return trigger(signupStepForms.step1);
   };
   const resetCertification = () => {
-    sendEmailRef.current = '';
+    setIsOpenCertificationEmail(false);
     resetDuplicateCheckedEmail();
     handleAccessStepList('step2', false);
     setFocus('email');
   };
 
   const onClickCheckEmail = async () => {
-    if (isPending) return;
+    if (getCheckValidEmailIsLoading) return;
     if (!(await validCheck())) {
       setError('email', {
         type: 'required',
@@ -54,31 +69,9 @@ const SignUpStep1 = ({
       resetCertification();
       return;
     }
-    await mutateAsync(
-      { email: getValues('email') },
-      {
-        onSuccess: (data) => {
-          // 요청 성공 시의 처리
-          if (data.status === 200) {
-            clearErrors('email');
-            sendEmailRef.current = getValues('email');
-          }
-        },
-        onError: (error) => {
-          // 에러 처리
-          if (error.response?.status === 409) {
-            setError('email', {
-              type: 'duplicated',
-              message: '이미 사용중인 이메일입니다.',
-            });
-          }
-          resetDuplicateCheckedEmail();
-        },
-        onSettled: () => {
-          // 성공/실패와 관계없이 실행될 로직
-        },
-      },
-    );
+    if (await fetchCheckEmail()) {
+      await fetchSendEmail();
+    }
   };
 
   const onClickNextStep = async () => {
@@ -103,6 +96,25 @@ const SignUpStep1 = ({
     setDuplicateCheckedEmail(getValues('email'));
   };
 
+  const fetchCheckEmail = async () => {
+    const checkEmailresult = await getCheckValidEmailRefetch();
+    if (checkEmailresult.data?.body === false) {
+      setError('email', {
+        type: 'duplicate',
+        message: '이미 가입된 이메일입니다.',
+      });
+    }
+
+    return checkEmailresult.data?.body;
+  };
+  const fetchSendEmail = async () => {
+    const sendEmailResult = await getSendEmailCertificationRefetch();
+    if (sendEmailResult.data?.body) {
+      clearErrors('email');
+      setIsOpenCertificationEmail(true);
+    }
+  };
+
   return (
     <>
       <div className="flex">
@@ -116,10 +128,10 @@ const SignUpStep1 = ({
             required: true,
           })}
           isReadOnly={
-            sendEmailRef.current || duplicateCheckedEmail ? true : false
+            isOpenCertificationEmail || duplicateCheckedEmail ? true : false
           }
         >
-          {sendEmailRef.current || duplicateCheckedEmail ? (
+          {isOpenCertificationEmail || duplicateCheckedEmail ? (
             <button
               onClick={resetCertification}
               className="absolute right-2 top-1/2 flex -translate-y-1/2 transform justify-center rounded-full bg-gray-300 px-2 font-semibold text-white hover:opacity-75"
@@ -132,36 +144,23 @@ const SignUpStep1 = ({
               type="button"
               className="absolute right-2 top-1/2 flex w-20 -translate-y-1/2 transform justify-center rounded-lg border bg-primary py-2 font-semibold text-white hover:opacity-75 focus:opacity-75"
             >
-              {isPending ? <Spinner color="#fff" size="25px" /> : '중복확인'}
+              {getCheckValidEmailIsLoading ? (
+                <Spinner color="#fff" size="25px" />
+              ) : (
+                '중복확인'
+              )}
             </button>
           )}
         </InputWithLabel>
       </div>
-      {sendEmailRef.current && (
-        <CertificationEmail
-          sendEmail={sendEmailRef.current}
-          onClickCheckEmail={onClickCheckEmail}
-          onSuccessCertification={onSuccessCertification}
-        />
+      {isOpenCertificationEmail && (
+        <CertificationEmail onSuccessCertification={onSuccessCertification} />
       )}
       {errors.email && <p className="text-red-600">{errors.email?.message}</p>}
       {duplicateCheckedEmail === getValues('email') && !errors.email && (
         <p className="mt-1 flex items-center text-primary-medium">
           <span className="mr-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary-medium">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-3 w-3"
-              viewBox="0 0 20 20"
-              fill="#fff"
-              stroke="#fff"
-              strokeWidth="1"
-            >
-              <path
-                fillRule="evenodd"
-                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                clipRule="evenodd"
-              ></path>
-            </svg>
+            <IconCheck className="fill-white stroke-white" />
           </span>
           인증완료
         </p>

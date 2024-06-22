@@ -12,6 +12,7 @@ export const getCheckEmailCertification = async (
   email: string,
   code: string,
 ) => {
+  console.log('!!', code);
   return axiosInstance.get(`/sign/confirm?email=${email}&code=${code}`);
 };
 

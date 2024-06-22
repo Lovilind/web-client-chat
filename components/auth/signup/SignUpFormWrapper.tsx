@@ -8,6 +8,8 @@ import SignUpStep2 from './SignUpStep2';
 import { useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import useAuthStore from '@/store/useAuthStore';
+import usePostSignUp from '@/hooks/react-query/auth/usePostSignUp';
+import { PostSignUpPayload } from '@/controller/authController';
 
 export interface SignUpFormDataType {
   email: string;
@@ -60,6 +62,7 @@ const SignUpButton = ({
 const SignUpFormWrapper = () => {
   const router = useRouter();
   const { resetDuplicateCheckedEmail } = useAuthStore();
+  const { mutateAsync } = usePostSignUp();
 
   const stepList = useMemo(() => Object.keys(signupStepForms), []);
 
@@ -80,11 +83,28 @@ const SignUpFormWrapper = () => {
     }
   };
 
-  const submitForm = (data: SignUpFormDataType) => {
-    console.log(data);
-    // TODO: 회원가입 API 호출, code값 제거필요
-    alert('회원가입 완료');
-    router.push('/');
+  const submitForm = async (data: SignUpFormDataType) => {
+    // console.log(data);
+    const payload: PostSignUpPayload = {
+      email: data.email,
+      password: data.password,
+      loginType: '1',
+      // loginType: 'email',
+      rePassword: data.passwordCheck,
+      code: data.code,
+    };
+    try {
+      await mutateAsync(payload, {
+        onSuccess: () => {
+          alert('회원가입 완료');
+          router.push('/');
+        },
+        onError: (error) => {
+          console.log('##err', error);
+          alert('회원가입 실패');
+        },
+      });
+    } catch (error) {}
   };
   useEffect(() => {
     return () => {
