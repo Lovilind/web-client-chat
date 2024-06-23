@@ -2,21 +2,9 @@
 
 import { UserThumbnail } from './UserThumbnail';
 
-export const ChattingRoomItem = ({
-  onClickChattingRoomItem,
-}: {
-  onClickChattingRoomItem?: (eventName: string) => void;
-}) => {
-  const onCLickItem = (eventName: string) => (e: unknown) => {
-    if (onClickChattingRoomItem) {
-      onClickChattingRoomItem(eventName);
-    }
-  };
+export const ChattingRoomItem = () => {
   return (
-    <li
-      id="lvl-chatting-room-item"
-      onClick={onCLickItem('ON_CLICK_CHATTING_ROOM_ITEM')}
-    >
+    <div id="lvl-chatting-room-item">
       <div className="box-info fx-rw top">
         <h3 className="room-title row-1">
           러브윈드 채팅방 익명의 그룹 소개팅 채팅방 제목 러브윈드 채팅방 익명의
@@ -52,6 +40,6 @@ export const ChattingRoomItem = ({
           <UserThumbnail />
         </section>
       </section>
-    </li>
+    </div>
   );
 };
