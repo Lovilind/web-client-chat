@@ -1,4 +1,4 @@
-import ThreeColumnLayout from '@/components/layout/ThreeColumnLayout';
+import ThreeColumnContainer from '@/components/layout/ThreeColumnContainer';
 import AvatarBox from '@/components/mypage/AvatarBox';
 import MyPageSidebar from '@/components/mypage/MyPageSidebar';
 
@@ -8,7 +8,8 @@ interface MyPageLayoutProps {
 
 const MyPageLayout = ({ children }: MyPageLayoutProps) => {
   return (
-    <ThreeColumnLayout
+    <ThreeColumnContainer
+      pageTitleText="My page"
       firstBoxChildren={
         <>
           <AvatarBox />
@@ -17,7 +18,7 @@ const MyPageLayout = ({ children }: MyPageLayoutProps) => {
       }
     >
       {children}
-    </ThreeColumnLayout>
+    </ThreeColumnContainer>
   );
 };
 

@@ -1,11 +1,12 @@
-import ThreeColumnLayout from '@/components/layout/ThreeColumnLayout';
+import ThreeColumnContainer from '@/components/layout/ThreeColumnContainer';
 import MyChatList from '../../../components/chat/ChatList/MyChatList';
 import AvatarBox from '@/components/mypage/AvatarBox';
 
 export default function layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
-      <ThreeColumnLayout
+      <ThreeColumnContainer
+        pageTitleText={'Chatting'}
         firstBoxChildren={
           <>
             <AvatarBox />
@@ -14,7 +15,7 @@ export default function layout({ children }: { children: React.ReactNode }) {
         }
       >
         {children}
-      </ThreeColumnLayout>
+      </ThreeColumnContainer>
     </div>
   );
 }
