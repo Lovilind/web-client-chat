@@ -2,7 +2,8 @@ import React from 'react';
 
 function MyChatList() {
   return (
-    <div className="hidden max-w-64 border-r-2 border-gray-300 p-3 px-5 lg:block lg:flex-1">
+    <div className="hidden p-3 px-5 lg:block lg:flex-1">
+      {/* <div className="hidden p-3 px-5 lg:block lg:flex-1"> */}
       <div className="text-md flex flex-row items-center justify-around">
         <span className="font-semibold">매칭된 채팅방 목록</span>
         <span className="flex h-5 w-5 items-center justify-center rounded-md text-gray-500">

@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Nav from './Nav';
-import { IconArrow } from './icons';
+import { IconArrow } from '../icons';
 import { useRouter } from 'next/navigation';
 
 const Header = () => {

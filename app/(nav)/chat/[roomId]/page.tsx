@@ -1,5 +1,5 @@
 import React from 'react';
-import ChatRoom from './(components)/ChatRoom/ChatRoom';
+import ChatRoom from '../../../../components/chat/ChatRoom/ChatRoom';
 
 export default function RoomId({ params }: { params: { roomId: string } }) {
   return (

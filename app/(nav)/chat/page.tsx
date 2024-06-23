@@ -1,6 +1,6 @@
 'use client';
 
-import { ChattingRoomItem } from '@/components/ChattingRoomItem';
+import { ChattingRoomItem } from '@/components/chat/ChattingRoomItem';
 import Link from 'next/link';
 
 export default function Chat() {
@@ -43,6 +43,45 @@ export default function Chat() {
               <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
             </Link>
             <Link href={'/chat/5'}>
+              <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
+            </Link>
+            <Link href={'/chat/6'}>
+              <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
+            </Link>
+            <Link href={'/chat/6'}>
+              <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
+            </Link>
+            <Link href={'/chat/6'}>
+              <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
+            </Link>
+            <Link href={'/chat/6'}>
+              <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
+            </Link>
+            <Link href={'/chat/6'}>
+              <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
+            </Link>
+            <Link href={'/chat/6'}>
+              <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
+            </Link>
+            <Link href={'/chat/6'}>
+              <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
+            </Link>
+            <Link href={'/chat/6'}>
+              <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
+            </Link>
+            <Link href={'/chat/6'}>
+              <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
+            </Link>
+            <Link href={'/chat/6'}>
+              <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
+            </Link>
+            <Link href={'/chat/6'}>
+              <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
+            </Link>
+            <Link href={'/chat/6'}>
+              <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
+            </Link>
+            <Link href={'/chat/6'}>
               <ChattingRoomItem onClickChattingRoomItem={onClickFromChat} />
             </Link>
             <Link href={'/chat/6'}>
