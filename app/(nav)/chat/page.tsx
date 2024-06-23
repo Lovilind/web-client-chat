@@ -18,10 +18,11 @@ export default function ChatPage() {
           </section>
 
           <ul className="">
-            {Array.from({ length: 20 }).map((_, idx) => {
+            {Array.from({ length: 40 }).map((_, idx) => {
               return (
                 <li key={idx}>
                   <Link href={`/chat/${idx + 1}`}>
+                    {idx + 1}
                     <ChattingRoomItem />
                   </Link>
                 </li>

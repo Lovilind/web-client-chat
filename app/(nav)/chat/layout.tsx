@@ -4,18 +4,16 @@ import AvatarBox from '@/components/mypage/AvatarBox';
 
 export default function layout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
-      <ThreeColumnContainer
-        pageTitleText={'Chatting'}
-        firstBoxChildren={
-          <>
-            <AvatarBox />
-            <MyChatList />
-          </>
-        }
-      >
-        {children}
-      </ThreeColumnContainer>
-    </div>
+    <ThreeColumnContainer
+      pageTitleText={'Chatting'}
+      firstBoxChildren={
+        <>
+          <AvatarBox />
+          <MyChatList />
+        </>
+      }
+    >
+      {children}
+    </ThreeColumnContainer>
   );
 }

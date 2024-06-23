@@ -10,12 +10,14 @@ const ThreeColumnContainer = ({
   children: mainBoxChildren,
 }: ThreeColumnContainerProps) => {
   return (
-    <div className="flex min-h-screen flex-col gap-5 px-5 py-5 lg:flex-row lg:py-10">
-      <section className="rounded-3xl border shadow-md lg:w-[25%]">
+    <div className="relative flex min-h-screen flex-col gap-5 px-5 py-5 lg:flex-row lg:py-10">
+      <section className="sticky top-2 flex h-[95vh] flex-col rounded-3xl border shadow-md lg:w-[25%]">
         <h1 className="bold mb-4 border-b px-4 py-4 text-xl">
           {pageTitleText}
         </h1>
-        <div className="flex h-full flex-col gap-1">{firstBoxChildren}</div>
+        <div className="flex flex-1 flex-col gap-1 overflow-hidden">
+          {firstBoxChildren}
+        </div>
       </section>
       <section className="flex-1">
         <div className="min-h-full rounded-3xl border p-5 shadow-md">
