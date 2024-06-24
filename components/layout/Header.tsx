@@ -4,9 +4,28 @@ import Link from 'next/link';
 import Nav from './Nav';
 import { IconArrow } from '../icons';
 import { useRouter } from 'next/navigation';
+import { useLayoutEffect, useState } from 'react';
+import useGetLogout from '@/hooks/react-query/auth/useGetLogout';
 
 const Header = () => {
+  const [isLogin, setIsLogin] = useState(false);
   const router = useRouter();
+  const { refetch } = useGetLogout();
+  const loginCheck = () => {
+    if (localStorage.getItem('accessToken')) {
+      return setIsLogin(true);
+    }
+    return setIsLogin(false);
+  };
+
+  const handleLogout = async () => {
+    await refetch();
+    router.push('/signin');
+  };
+
+  useLayoutEffect(() => {
+    loginCheck();
+  }, []);
   return (
     <header className="sticky top-0 z-2 w-full overflow-hidden border-b bg-white px-8 py-4 lg:relative lg:flex lg:w-[130px] lg:items-center lg:justify-center lg:border-b-0 lg:border-r lg:p-0">
       <div className="lg:fixed lg:top-5 lg:h-[calc(100vh-50px)]">
@@ -32,9 +51,15 @@ const Header = () => {
             <Nav />
           </div>
           <div className="w-6 lg:hidden"></div>
-          <Link href={'/signin'} className="hidden lg:block">
-            <span className="rounded-lg border p-4">LOGIN</span>
-          </Link>
+          {isLogin ? (
+            <button onClick={handleLogout} className="hidden lg:block">
+              <span className="rounded-lg border p-4">LOGOUT</span>
+            </button>
+          ) : (
+            <Link href={'/signin'} className="hidden lg:block">
+              <span className="rounded-lg border p-4">LOGIN</span>
+            </Link>
+          )}
         </div>
       </div>
     </header>

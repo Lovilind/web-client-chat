@@ -14,6 +14,8 @@ import { loginRegisterSchema } from '@/constants/Schema';
 import Link from 'next/link';
 import CheckboxWithLabel from '../CheckboxWithLabel';
 import { useRouter } from 'next/navigation';
+import usePostLogin from '@/hooks/react-query/auth/usePostLogin';
+import { PostLoginPayload } from '@/controller/authController';
 
 const SaveIdAndFindPassword = forwardRef(
   (_, ref: ForwardedRef<HTMLInputElement>) => {
@@ -52,6 +54,7 @@ const SignInFormContainer = () => {
     handleSubmit,
     register,
     setValue,
+    setError,
     formState: { errors },
   } = useForm({
     // mode: 'onBlur',
@@ -63,25 +66,44 @@ const SignInFormContainer = () => {
   });
   const [isShowPassword, setIsShowPassword] = useState(false);
 
+  const { mutateAsync } = usePostLogin();
+
   const rememberMeRef = useRef<HTMLInputElement>(null);
 
   const handleIsShowPassword = () => {
     setIsShowPassword((prev) => !prev);
   };
 
-  const submitForm = (data: { email: string; password: string }) => {
-    console.log(data);
+  const submitForm = async (data: { email: string; password: string }) => {
+    // console.log(data);
     /* 
       TODO: 로그인 API 호출, 에러처리
       성공시 메인페이지 or 유저정보입력 페이지 이동 로직 추가 필요
       jwt 토큰 저장
     */
-    if (rememberMeRef.current && rememberMeRef.current.checked) {
-      localStorage.setItem('email', data.email);
-    } else {
-      localStorage.removeItem('email');
-    }
-    router.push('/');
+    const payload: PostLoginPayload = {
+      email: data.email,
+      password: data.password,
+    };
+    try {
+      await mutateAsync(payload, {
+        onSuccess: () => {
+          if (rememberMeRef.current && rememberMeRef.current.checked) {
+            // 아이디 저장 체크박스 체크시 localStorage에 email 저장
+            localStorage.setItem('email', data.email);
+          } else {
+            localStorage.removeItem('email');
+          }
+          router.push('/');
+        },
+        onError: (error) => {
+          console.log('##err', error);
+          setError('password', {
+            message: '아이디 또는 비밀번호가 일치하지 않습니다.',
+          });
+        },
+      });
+    } catch (error) {}
   };
 
   useLayoutEffect(() => {
