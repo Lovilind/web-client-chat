@@ -37,6 +37,7 @@ axiosInstance.interceptors.response.use(
     if (response.headers.authorization) {
       // 로그인 성공 시 accessToken을 localStorage에 저장 'Bearer token'형식으로 Bearer포함되서 헤더로 오는중
       localStorage.setItem('accessToken', response.headers.authorization);
+      document.cookie = `accessToken=${response.headers.authorization}`;
     }
 
     return response;
