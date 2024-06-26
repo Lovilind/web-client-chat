@@ -2,44 +2,54 @@
 
 import { UserThumbnail } from './UserThumbnail';
 
+const hashDummy = [
+  'INFJ',
+  '여행',
+  '스포츠',
+  '서울',
+  '서울대',
+  '와인',
+  '한식',
+  '예술',
+];
 export const ChattingRoomItem = () => {
   return (
-    <div id="lvl-chatting-room-item">
-      <div className="box-info fx-rw top">
-        <h3 className="room-title row-1">
+    <>
+      <p className="rounded-br-xl rounded-tl-lg px-4 py-1 text-sm font-bold text-white">
+        FEATURED
+      </p>
+
+      <div className="mx-4">
+        <p className="text-xs font-bold text-sky-500">[부제부제]</p>
+        <p className="font-bold text-gray-600">
           러브윈드 채팅방 익명의 그룹 소개팅 채팅방 제목 러브윈드 채팅방 익명의
-          그룹 소개팅 채팅방 제목
-        </h3>
-        <label className="room-status-badge">대기중...</label>
-      </div>
-
-      <div className="box-info fx-rw mid">
-        <p className="room-desc row-2">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt,
-          suscipit sint debitis vel quisquam aut iusto nihil laboriosam!
-          Recusandae inventore facere rerum cum assumenda. Qui at fugit
-          blanditiis nemo aut.
         </p>
-        <span className="room-enter-count ">3/7</span>
+        <p className="text-gray-400">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem iure
+          sed similique quod dolores reprehenderit? Est perferendis, magni odit
+          dicta vitae sed eaque.
+        </p>
+        <p className="text-gray-400"> Beginner speakers </p>
+        <div className="flex justify-between">
+          <div className="flex gap-2">
+            {hashDummy.map((item) => {
+              return (
+                <label
+                  className="inline-block cursor-pointer text-[12px] text-gray-400 underline"
+                  key={item}
+                >
+                  #{item}
+                </label>
+              );
+            })}
+          </div>
+          <ul>
+            <li>
+              <UserThumbnail />
+            </li>
+          </ul>
+        </div>
       </div>
-
-      <section className="box-info fx-rw bottom">
-        <section className="wrap-interest">
-          <label id="lvl-interest-badge">INFJ</label>
-          <label id="lvl-interest-badge">여행</label>
-          <label id="lvl-interest-badge">스포츠</label>
-          <label id="lvl-interest-badge">서울</label>
-          <label id="lvl-interest-badge">서울대</label>
-          <label id="lvl-interest-badge">와인</label>
-          <label id="lvl-interest-badge">한식</label>
-          <label id="lvl-interest-badge">예술</label>
-        </section>
-        <section className="wrap-entry-thumbnails fx-rw">
-          <UserThumbnail />
-          <UserThumbnail />
-          <UserThumbnail />
-        </section>
-      </section>
-    </div>
+    </>
   );
 };

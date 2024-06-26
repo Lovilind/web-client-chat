@@ -17,12 +17,12 @@ export default function ChatPage() {
             </div>
           </section>
 
-          <ul className="">
+          <ul className="flex flex-col gap-4">
             {Array.from({ length: 40 }).map((_, idx) => {
               return (
-                <li key={idx}>
+                <li key={idx} className="border">
                   <Link href={`/chat/${idx + 1}`}>
-                    {idx + 1}
+                    {/* {idx + 1} */}
                     <ChattingRoomItem />
                   </Link>
                 </li>
