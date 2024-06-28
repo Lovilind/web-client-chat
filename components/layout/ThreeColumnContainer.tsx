@@ -11,7 +11,7 @@ const ThreeColumnContainer = ({
 }: ThreeColumnContainerProps) => {
   return (
     <div className="relative flex min-h-screen flex-col gap-5 px-5 py-5 lg:flex-row lg:py-10">
-      <section className="sticky top-2 flex flex-col rounded-3xl border shadow-md lg:h-[95vh] lg:w-[25%]">
+      <section className="top-2 flex flex-col rounded-3xl border shadow-md lg:sticky lg:h-[95vh] lg:w-[25%]">
         <h1 className="bold mb-4 border-b px-4 py-4 text-xl">
           {pageTitleText}
         </h1>

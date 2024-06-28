@@ -55,7 +55,7 @@ const MyPageSidebar = () => {
     setIsOpenSidebar(!isOpenSidebar);
   };
   return (
-    <div className="relative">
+    <div className="relative min-h-[34px]">
       <aside
         className={`relative mx-auto w-full flex-1 overflow-hidden transition-all duration-500 ease-in-out ${!isOpenSidebar ? 'max-h-screen' : 'max-h-0'} lg:max-h-max`}
         aria-label="Sidebar"
@@ -70,7 +70,7 @@ const MyPageSidebar = () => {
       </aside>
       <button onClick={handleIsOpenSidebar} className="group">
         <i
-          className={`absolute -bottom-4 right-1/2 inline-block h-8 w-8 translate-x-1/2 rounded-full border-2 bg-white group-hover:border-primary lg:hidden  ${groupHoverClassName}`}
+          className={`absolute bottom-[1px] right-1/2 inline-block h-8 w-8 translate-x-1/2 rounded-full lg:hidden ${isOpenSidebar && 'border-2 bg-white group-hover:border-primary'} ${groupHoverClassName}`}
         >
           <IconChevron
             className={`fill-gray-300 group-hover:fill-primary ${groupHoverClassName}  ${!isOpenSidebar ? 'rotate-180' : 'rotate-0'}`}
