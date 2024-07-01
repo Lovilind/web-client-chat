@@ -7,7 +7,7 @@ const MyChatList = () => {
           4
         </span>
       </h2>
-      <ul className="flex h-[90%] flex-1 flex-col space-y-1 overflow-y-auto">
+      <ul className="custom-scrollbar flex h-[90%] flex-1 flex-col space-y-1 overflow-y-auto">
         {Array.from({ length: 30 }).map((_, idx) => {
           return (
             <li key={idx}>

@@ -21,10 +21,9 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
+/* 
 
-/* TODO: tail wind로 정의해서 쓸것, 우선 사요 */
-
-.page-container {
+/* .page-container {
   width: 100%;
   height: 100vh;
   background-color: #333;
@@ -179,8 +178,7 @@
 #lvl-interest-badge::before {
   content: '#';
 }
-
-.user-thumbnail {
+*/ .user-thumbnail {
   background-image: url('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');
   width: 20px;
   height: 20px;
@@ -208,4 +206,8 @@ main {
   @media (min-width: 1024px) {
     padding: 6rem;
   }
+}
+*/ .custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--foreground-rgb) var(--background-start-rgb);
 }
