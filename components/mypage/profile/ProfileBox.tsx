@@ -1,12 +1,12 @@
-import Image from 'next/image';
 import React from 'react';
 
-interface ProfileBoxProps {
-  isEdit: boolean;
-  handleIsEdit: () => void;
-}
+// interface ProfileBoxProps {
+//   isEdit: boolean;
+//   handleIsEdit: () => void;
+// }
 
-const ProfileBox = ({ isEdit, handleIsEdit }: ProfileBoxProps) => {
+const ProfileBox = () => {
+  // const ProfileBox = ({ isEdit, handleIsEdit }: ProfileBoxProps) => {
   // 닉네임, 주소, 생년월일, 프로필 사진 정보 확인 가능
   return (
     <div className="relative mt-16 w-full break-words bg-white">

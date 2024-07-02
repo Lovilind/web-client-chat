@@ -14,7 +14,7 @@ const SocialLoginButton = ({ buttonType }: SocialLoginButtonType) => {
 
   return (
     <button
-      className="font-Arial hover:border-primary border-gray-600bg-white flex h-[60px] w-full cursor-pointer items-center rounded-[5px] border px-4 text-base font-medium transition-all duration-300 ease-in-out "
+      className="font-Arial border-gray-600bg-white flex h-[60px] w-full cursor-pointer items-center rounded-[5px] border px-4 text-base font-medium transition-all duration-300 ease-in-out hover:border-primary "
       data-item={buttonType}
       onClick={signInSocial}
     >

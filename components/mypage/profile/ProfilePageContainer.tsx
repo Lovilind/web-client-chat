@@ -6,6 +6,7 @@ import Image from 'next/image';
 const ProfilePageContainer = () => {
   const [isEdit, setIsEdit] = useState(false);
   const handleIsEdit = () => {
+    console.log(isEdit);
     setIsEdit((prev) => !prev);
   };
   return (
@@ -33,7 +34,8 @@ const ProfilePageContainer = () => {
           </div>
         </div>
       </div>
-      <ProfileBox isEdit={isEdit} handleIsEdit={handleIsEdit} />
+      <ProfileBox />
+      {/* <ProfileBox isEdit={isEdit} handleIsEdit={handleIsEdit} /> */}
     </section>
   );
 };

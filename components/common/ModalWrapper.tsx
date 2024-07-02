@@ -63,7 +63,7 @@ const ModalWrapper = ({
             }`,
           )}`}
         >
-          <div className="z-1 absolute right-[5px] top-[5px] flex justify-end">
+          <div className="absolute right-[5px] top-[5px] z-1 flex justify-end">
             {/* <div className="flex justify-end"> */}
             {isCloseButtonVisible && (
               <button
