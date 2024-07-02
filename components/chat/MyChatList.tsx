@@ -1,4 +1,15 @@
+'use client';
+
+import useGetMyChatList from '@/hooks/react-query/chat/useGetMyChatList';
+import SkeletonSquare from '../common/skeleton/SkeletonSquare';
+import useGetAllChatList from '@/hooks/react-query/chat/useGetAllChatList';
+
 const MyChatList = () => {
+  const { data, isLoading } = useGetAllChatList();
+  // const { data, isLoading } = useGetMyChatList();
+  console.log(data);
+
+  // if (isLoading) return <div>Loading...</div>;
   return (
     <div className="hidden p-3 px-5 lg:block lg:flex-1 lg:overflow-y-hidden">
       <h2 className="text-md flex flex-row items-center justify-around gap-4 border-b border-primary pb-2">
@@ -7,8 +18,9 @@ const MyChatList = () => {
           4
         </span>
       </h2>
+      <SkeletonSquare className="h-[30px] bg-blue-500" />
       <ul className="custom-scrollbar flex h-[90%] flex-1 flex-col space-y-1 overflow-y-auto">
-        {Array.from({ length: 30 }).map((_, idx) => {
+        {Array.from({ length: 5 }).map((_, idx) => {
           return (
             <li key={idx}>
               <button className="flex w-full items-center justify-between rounded-xl p-3 hover:bg-primary">
