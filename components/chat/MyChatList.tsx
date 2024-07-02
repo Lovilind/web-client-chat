@@ -1,11 +1,11 @@
 'use client';
 
-import useGetMyChatList from '@/hooks/react-query/chat/useGetMyChatList';
+// import useGetMyChatList from '@/hooks/react-query/chat/useGetMyChatList';
 import SkeletonSquare from '../common/skeleton/SkeletonSquare';
 import useGetAllChatList from '@/hooks/react-query/chat/useGetAllChatList';
 
 const MyChatList = () => {
-  const { data, isLoading } = useGetAllChatList();
+  const { data } = useGetAllChatList();
   // const { data, isLoading } = useGetMyChatList();
   console.log(data);
 

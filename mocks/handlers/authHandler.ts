@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable import/no-extraneous-dependencies */
 import { http, HttpResponse } from 'msw';
 
 const registeredEmails = ['test@test.com', 'user2@example.com'];
@@ -98,28 +100,28 @@ export const authHandler = [
   }),
 
   // 로그인
-  http.post('/msw/signin', ({ request }) => {
-    const { email, password } = request.body;
+  // http.post('/msw/signin', ({ request }) => {
+  //   const { email, password } = request.body;
 
-    return HttpResponse.status(201).json({
-      message: 'Signin successful',
-    });
-  }),
+  //   return HttpResponse.status(201).json({
+  //     message: 'Signin successful',
+  //   });
+  // }),
   // 회원가입
-  http.post('/msw/signup', ({ request }) => {
-    const { email } = request.body;
+  // http.post('/msw/signup', ({ request }) => {
+  //   const { email } = request.body;
 
-    if (registeredEmails.includes(email)) {
-      return HttpResponse.status(409).json({
-        message: 'Email already exists',
-      });
-    }
+  //   if (registeredEmails.includes(email)) {
+  //     return HttpResponse.status(409).json({
+  //       message: 'Email already exists',
+  //     });
+  //   }
 
-    // 회원가입 성공 시 이메일 저장
-    registeredEmails.push(email);
+  // 회원가입 성공 시 이메일 저장
+  //   registeredEmails.push(email);
 
-    return HttpResponse.status(201).json({
-      message: 'Signup successful',
-    });
-  }),
+  //   return HttpResponse.status(201).json({
+  //     message: 'Signup successful',
+  //   });
+  // }),
 ];
