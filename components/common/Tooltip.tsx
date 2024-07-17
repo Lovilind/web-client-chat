@@ -18,6 +18,7 @@ export interface CustomTooltipProps {
   tooltipColor?: string;
   /** Tooltip이 클릭이벤트로인해 고정할지 안할지 정하는 프롭스 */
   isShowTooltipByClick?: boolean;
+  isNoShowTooltip?: boolean;
 }
 type TooltipSideType = 'top' | 'right' | 'bottom' | 'left';
 
@@ -32,6 +33,7 @@ const CustomTooltip = ({
   // tooltipSpacing = 15,
   tooltipColor = '#fff',
   isShowTooltipByClick = false,
+  isNoShowTooltip = false,
 }: CustomTooltipProps) => {
   const [isTooltipOpenByClick, setisTooltipOenByClick] = useState(false);
 
@@ -74,6 +76,7 @@ const CustomTooltip = ({
         return 'rotate-90 left-[calc(100%-5px)] top-1/2 -translate-y-1/2';
     }
   };
+  if (isNoShowTooltip) return <>{children}</>;
 
   return (
     <>
