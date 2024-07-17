@@ -1,4 +1,4 @@
-'use client';
+import ChatCreateButton from '@/components/chat/ChatCreateButton';
 import { ChattingRoomItem } from '@/components/chat/ChattingRoomItem';
 import { IconFilter, IconMagnifier } from '@/components/icons';
 import Link from 'next/link';
@@ -24,6 +24,7 @@ export default function ChatPage() {
                   <IconFilter className="stroke-gray-600 hover:stroke-primary" />
                 </i>
               </button>
+              <ChatCreateButton />
             </div>
           </section>
 
