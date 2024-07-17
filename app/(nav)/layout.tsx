@@ -18,7 +18,7 @@ export default function CommonLayout({
     <>
       <div className="min-h-screen lg:flex">
         <Header />
-        <div className="flex-1">
+        <div className="z-2 flex-1">
           {children}
           <Footer />
         </div>
